@@ -9,6 +9,12 @@ Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
 Setup
 -----
+Clone project
+
+    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git
+
+ And run on terminal
+
     npm run start
 
 Demo:
