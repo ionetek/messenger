@@ -13,15 +13,15 @@ Setup
 
 Demo:
 -----
-* [Login](https://netlify.app/)
-* [Registration](https://netlify.app/registration.html)
-* [Empty dialog](https://netlify.app/index.html)
-* [Dialog](https://netlify.app/messages.html)
-* [Account](https://netlify.app/account.html)
-* [Account edit](https://netlify.app/account-edit.html)
-* [Password edit](https://netlify.app/password-edit.html)
-* [404 Error](https://netlify.app/404.html)
-* [500 Error](https://netlify.app/500.html)
+* [Login](https://statuesque-kringle-291216.netlify.app/)
+* [Registration](https://statuesque-kringle-291216.netlify.app/registration.html)
+* [Empty dialog](https://statuesque-kringle-291216.netlify.app/index.html)
+* [Dialog](https://statuesque-kringle-291216.netlify.app/messages.html)
+* [Account](https://statuesque-kringle-291216.netlify.app/account.html)
+* [Account edit](https://statuesque-kringle-291216.netlify.app/account-edit.html)
+* [Password edit](https://statuesque-kringle-291216.netlify.app/password-edit.html)
+* [404 Error](https://statuesque-kringle-291216.netlify.app/404.html)
+* [500 Error](https://statuesque-kringle-291216.netlify.app/500.html)
 
 Pull request
 ------------
