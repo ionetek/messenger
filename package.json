@@ -5,7 +5,7 @@
   "scripts": {
     "start" : "cp -R ./static/images ./dist && parcel build ./static/index.html && node ./server.js",
     "dev": "parcel build ./static/index.html",
-    "build": "parcel build ./static/index.html",
+    "build": "cp -R ./static/images ./dist && parcel build ./static/index.html",
     "watch": "cp -R ./static/images ./dist && parcel static/index.html --open --port 2000"
   },
   "repository": {
