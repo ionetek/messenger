@@ -1,4 +1,5 @@
-###Messenger for Yandex.Practicum
+Messenger for Yandex.Practicum
+==============================
 
 A messenger for Yandex Practicum using its own template engine.
 
@@ -6,10 +7,12 @@ A messenger for Yandex Practicum using its own template engine.
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
-### Setup
+Setup
+-----
     npm run start
 
-###Demo:
+Demo:
+-----
 * [Login](https://netlify.app/)
 * [Registration](https://netlify.app/registration.html)
 * [Empty dialog](https://netlify.app/index.html)
@@ -20,9 +23,11 @@ Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 * [404 Error](https://netlify.app/404.html)
 * [500 Error](https://netlify.app/500.html)
 
-###Pull request:
+Pull request
+------------
 
-### Template example
+Template example
+----------------
  ```jsx
 import Templator from '../../templator/index';
 const List = (props) => {
