@@ -21,6 +21,8 @@ Clone the repo:
 
 
 Install with npm:
+    
+    npm install
 
     npm run start
 
