@@ -10,6 +10,6 @@
   command = "npm run build"
 
 [[redirects]]
-   from = "/*.html"
+   from = "/*"
    to = "/index.html"
    status = 200
