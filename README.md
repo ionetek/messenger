@@ -16,7 +16,7 @@ Clone the repo:
 
     git remote add origin https://github.com/ionetek/middle.messenger.praktikum.yandex.git
 
-    git git pull origin sprint_1
+    git pull origin sprint_1
    
 
 
