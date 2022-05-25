@@ -24,15 +24,15 @@
     "parcel": "^2.5.0",
     "path": "^0.12.7",
     "postcss-loader": "^7.0.0",
+    "postcss-modules": "^4.3.1",
+    "postcss-nested": "^5.0.6",
     "postcss-nesting": "^10.1.7",
     "postcss-parcel-import": "^0.0.2",
     "postcss-quantity-queries": "^0.5.0",
-    "postcss": "^8.4.14",
-    "postcss-modules": "^4.3.1",
-    "postcss-nested": "^5.0.6"
-  },
-  "devDependencies": {
     "cssnano": "^5.1.9",
     "postcss": "^8.4.14"
+  },
+  "devDependencies": {
+
   }
 }
