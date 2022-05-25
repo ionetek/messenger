@@ -11,19 +11,21 @@ Setup
 -----
 Clone the repo:
 
-
-    git init
-
     git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_1
 
-   
+Move to project path:
 
+    cd middle.messenger.praktikum.yandex
 
-Install with npm:
-    
+Install dependencies:
+
     npm install
 
+Run the project:
+
     npm run start
+
+Project will be available at http://localhost:3000
 
 Demo:
 -----
