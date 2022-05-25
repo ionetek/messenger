@@ -14,7 +14,7 @@ Clone the repo:
 
     git init
 
-    git clone origin https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b deploy
+    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b deploy
 
    
 
