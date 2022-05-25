@@ -13,7 +13,7 @@ Clone the repo:
 
     git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_1
 
-Move to project path:
+Move to the project path:
 
     cd middle.messenger.praktikum.yandex
 
