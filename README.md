@@ -7,6 +7,10 @@ A messenger for Yandex Practicum using its own template engine.
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
+Pull request
+-----
+[Link](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/1)
+
 Setup
 -----
 Clone the repo:
@@ -39,9 +43,6 @@ Demo:
 * [404 Error](https://statuesque-kringle-291216.netlify.app/404.html)
 * [500 Error](https://statuesque-kringle-291216.netlify.app/500.html)
 
-Pull request
-------------
-https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/1
 
 Template example
 ----------------
