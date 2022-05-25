@@ -41,6 +41,7 @@ Demo:
 
 Pull request
 ------------
+https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/1
 
 Template example
 ----------------
