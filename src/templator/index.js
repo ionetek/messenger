@@ -66,7 +66,7 @@ export default class Templator {
         addRow(tmpl.substr(rowStartPoint, tmpl.length - rowStartPoint));
 
         //Конвертируем массив строк templateFuncRows в единую JS строку
-        templateFunc += 'return templateFuncRows.join(" ");';
+        templateFunc += 'return templateFuncRows.join("");';
 
         console.log(templateFunc);
 
