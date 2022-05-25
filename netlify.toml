@@ -8,3 +8,8 @@
 [build]
   publish = "dist"
   command = "npm run build"
+
+[[redirects]]
+   from = "/*.html"
+   to = "/index.html"
+   status = 200
