@@ -9,11 +9,18 @@ Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
 Setup
 -----
-Clone project
+Clone the repo:
 
-    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git
 
- And run on terminal
+    git init
+
+    git remote add origin https://github.com/ionetek/middle.messenger.praktikum.yandex.git
+
+    git git pull origin sprint_1
+   
+
+
+Install with npm:
 
     npm run start
 
