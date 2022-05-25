@@ -7,10 +7,8 @@ A messenger for Yandex Practicum using its own template engine.
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
-Pull request
------
-[Link](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/1)
-
+👉 [Pull request](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/1)
+---
 Setup
 -----
 Clone the repo:
