@@ -1,0 +1,38 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
+  "scripts": {
+    "start": "parcel build ./static/index.html && cp -R ./static/images ./dist && node ./server.js",
+    "dev": "parcel build ./static/index.html",
+    "build": "parcel build ./static/index.html && cp -R ./static/images ./dist",
+    "watch": "cp -R ./static/images ./dist && parcel static/index.html --open --port 2000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ionetek/middle.messenger.praktikum.yandex.git"
+  },
+  "author": "Ivan Tekunov <ivan@oviland.ru>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ionetek/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/ionetek/middle.messenger.praktikum.yandex#readme",
+  "dependencies": {
+    "autoprefixer": "^10.4.7",
+    "express": "^4.18.1",
+    "parcel": "^2.5.0",
+    "path": "^0.12.7",
+    "postcss-loader": "^7.0.0",
+    "postcss-modules": "^4.3.1",
+    "postcss-nested": "^5.0.6",
+    "postcss-nesting": "^10.1.7",
+    "postcss-parcel-import": "^0.0.2",
+    "postcss-quantity-queries": "^0.5.0",
+    "cssnano": "^5.1.9",
+    "postcss": "^8.4.14"
+  },
+  "devDependencies": {
+
+  }
+}
