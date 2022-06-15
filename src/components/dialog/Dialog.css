@@ -55,14 +55,8 @@
           margin-top: 10px;
           padding-top: 30px;
           display: flex;
-          &-attachment {
-
-           }
           &-textarea {
                flex: 1 0;
-          }
-          &-submit {
-
           }
       }
 }

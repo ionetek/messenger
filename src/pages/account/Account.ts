@@ -1,12 +1,11 @@
-import Templator from '../../templator/index';
+import Block from '../../core/block/Block';
 import BackIcon from './backIcon.svg';
 import EditIcon from './editIcon.svg';
-import Avatar from './avatar.jpg';
 
-const Account = (props) => {
-
+export default class Account extends Block {
+  render() {
     const temp = `
-       <div class="main align-items-start pt-5">
+    <div class="main align-items-start pt-5">
            <div class="content content-center">
                 <div class="container container-xs">
                     <div class="nav-header">
@@ -23,7 +22,7 @@ const Account = (props) => {
                     </div>
                     <div class="profile-info text-center">
                         <div class="profile-info__avatar">
-                            <img src="${Avatar}" />
+                            <img src="images/avatar.jpg" />
                             <div class="avatar__hover">
                             
                             </div>
@@ -65,9 +64,6 @@ const Account = (props) => {
            </div>
       </div>
     `;
-
-    return new Templator(temp).compile(props);
+    return this.compile(temp, this.props);
+  }
 }
-
-export default Account;
-

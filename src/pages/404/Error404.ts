@@ -1,10 +1,9 @@
-import Templator from '../../templator/index';
+import Block from '../../core/block/Block';
 import Image404 from './404.svg';
 
-const Error404 = (props) => {
-
-    const temp = `
-       <div class="main">
+export default class Error404 extends Block {
+  render() {
+    const temp = `<div class="main">
            <div class="content content-center">
                 <div class="container container-xs text-center">
                 <img src="${Image404}">
@@ -16,11 +15,7 @@ const Error404 = (props) => {
               
                 </div>
            </div>
-       </div>
-    `;
-
-    return new Templator(temp).compile(props);
+       </div>`;
+    return this.compile(temp, {});
+  }
 }
-
-export default Error404;
-

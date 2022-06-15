@@ -1,18 +1,16 @@
-import Templator from '../../templator/index';
-import Button from '../button/Button';
+import Block from '../../core/block/Block';
 import './ChatList.css';
 import AccountIcon from './account.svg';
 
-const ChatList = (props) => {
-    const temp = `
-        
-            <h1>Messages <a href="account.html" class="btn"><img src="${AccountIcon}" /></a></h1>
+export default class ChatList extends Block {
+  render() {
+    const temp = `<div><h1>Messages <a href="account.html" class="btn"><img src="${AccountIcon}" /></a></h1>
             <div class="input-wrapper">
           
                 <input class="input-wrapper__form-control-gray" placeholder="Поиск">
             </div>
             <div class="chat-list">
-            <% if(this.items) {%>
+            <% if(this.items) {  %>
                 <% for (key in this.items) { %>
                     <a class="chat-list__item" href="messages.html">
                         <div class="chat-list__item-photo">
@@ -35,14 +33,7 @@ const ChatList = (props) => {
                 <% } %>
             <% } %>
             </div>
-           
-           
-    `;
-
-    return new Templator(temp).compile(props);
+</div>`;
+    return this.compile(temp, this.props);
+  }
 }
-
-export default ChatList;
-
-
-

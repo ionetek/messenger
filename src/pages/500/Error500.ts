@@ -1,8 +1,8 @@
-import Templator from '../../templator/index';
+import Block from '../../core/block/Block';
 import Image500 from './500.svg';
 
-const Error500 = (props) => {
-
+export default class Error404 extends Block {
+  render() {
     const temp = `
        <div class="main">
             <div class="content content-center">
@@ -18,9 +18,6 @@ const Error500 = (props) => {
             </div>
        </div>
     `;
-
-    return new Templator(temp).compile(props);
+    return this.compile(temp, {});
+  }
 }
-
-export default Error500;
-
