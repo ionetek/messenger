@@ -77,7 +77,6 @@ export default class Dialog extends Block {
     this.children.messageTextarea = messageTextarea;
 
     const ctx = { ...this.props, messageTextarea };
-
     const temp = `<div class="dialog">
             <% if (this.messages) { %>
             <div class="dialog__header">

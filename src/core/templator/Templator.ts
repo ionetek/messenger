@@ -1,6 +1,3 @@
-// eslint-disable-next-line import/extensions
-import { TProps } from '../types/Types';
-
 export default class Templator {
     // Регулярное выражение для поиска тегов шаблонизатора вида <% %>
     private TEMPLATE_TAG: RegExp = /<%(.*?)?%>/g;

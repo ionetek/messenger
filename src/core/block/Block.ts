@@ -86,7 +86,9 @@ class Block {
 
       this.customEvents.forEach((elem) => {
         Object.keys(elem.events).forEach((eventName) => {
-                this.element!.querySelector(elem.selector)!.addEventListener(eventName, elem.events[eventName]);
+          if (this.element!.querySelector(elem.selector)) {
+                    this.element!.querySelector(elem.selector)!.addEventListener(eventName, elem.events[eventName]);
+          }
         });
       });
     }
@@ -150,7 +152,9 @@ class Block {
       Object.values(this.children).forEach((child) => {
         // @ts-ignore
         const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
-        stub.replaceWith(child.getContent());
+        if (stub) {
+          stub.replaceWith(child.getContent());
+        }
       });
       // @ts-ignore
       return fragment.content;
