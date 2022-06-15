@@ -3,34 +3,27 @@ Messenger for Yandex.Practicum
 
 A messenger for Yandex Practicum using its own template engine.
 
-Ссылка на Pull Request: https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/1
-Она присутствовала в этом Readme (чуть ниже) с самого начала и даже выделена смайлом.
-
 ![img.png](https://oviland.ru/storage/messenger.png)
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
-👉 [Pull request](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/1)
----
 Setup
 -----
 Clone the repo:
 
-    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_1
 
-Move to the project path:
+    git init
 
-    cd middle.messenger.praktikum.yandex
+    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b deploy
 
-Install dependencies:
+   
 
+
+Install with npm:
+    
     npm install
 
-Run the project:
-
     npm run start
-
-Project will be available at http://localhost:3000
 
 Demo:
 -----
@@ -44,6 +37,8 @@ Demo:
 * [404 Error](https://statuesque-kringle-291216.netlify.app/404.html)
 * [500 Error](https://statuesque-kringle-291216.netlify.app/500.html)
 
+Pull request
+------------
 
 Template example
 ----------------
