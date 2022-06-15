@@ -67,6 +67,6 @@ export default class Templator {
       templateFunc += 'return templateFuncRows.join("");';
 
       // Генерируем реальную JS функцию из строки templateFunc, приправив ее пропсами
-      return Function(templateFunc).apply(props);
+      return new Function(templateFunc).apply(props);
     }
 }

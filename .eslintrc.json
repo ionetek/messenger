@@ -45,6 +45,8 @@
     "max-len": "off",
     "no-unused-vars": "warn",
     "import/prefer-default-export": "off",
+    "no-cond-assign": "off",
+    "no-new-func": "off",
     "import/extensions": [
       "error",
       "ignorePackages",

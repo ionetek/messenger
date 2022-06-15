@@ -64,6 +64,9 @@ export default class Login extends Block {
           this.setProps({ emailValue: e.target.value });
           validate(this);
         },
+        focus: () => {
+          validate(this);
+        },
       },
       required: {
         text: 'Некорректный email',
@@ -82,6 +85,9 @@ export default class Login extends Block {
       events: {
         blur: (e: any) => {
           this.setProps({ passwordValue: e.target.value });
+          validate(this);
+        },
+        focus: () => {
           validate(this);
         },
       },
