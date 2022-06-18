@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "moduleResolution": "node",
+    "target": "es2018"
+  },
+  "include": ["src", "typings/custom.d.ts"],
+  "exclude": ["node_modules"]
+}
