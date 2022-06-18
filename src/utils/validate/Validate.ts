@@ -9,6 +9,10 @@ function isEqual(a: TObj, b: TObj) {
 }
 
 const validate = (object: Block, strict = false) => {
+  // Валидация бывает строгая и нестрогая. За это отвечает параметр strict
+  // НЕСТРОГАЯ ВАЛИДАЦИЯ - Не проверяет поле, если в него не было введено ни одного символа.
+  // Это сделано, чтобы при blur всю форму не заваливало ошибками
+  // СТРОГАЯ ВАЛИДАЦИЯ - проверяет все поля и выводит все ошибки. Срабатывает при submit
   console.log('Validate');
   const errors: TObj = [];
   Object.entries(object.children).forEach(([key, child]) => {
