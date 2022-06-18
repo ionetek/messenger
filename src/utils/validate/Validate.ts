@@ -1,7 +1,16 @@
 import Block from '../../core/block/Block';
 
+function isEqual(a: TObj, b: TObj) {
+  if (Object.entries(a).length !== Object.entries(b).length) return false;
+  for (let i = 0; i < Object.entries(a).length; i++) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
 const validate = (object: Block, strict = false) => {
-  const errors: TObj = {};
+  console.log('Validate');
+  const errors: TObj = [];
   Object.entries(object.children).forEach(([key, child]) => {
     if (object.children[key].props.required) {
       const r = child.props.required;
@@ -47,7 +56,9 @@ const validate = (object: Block, strict = false) => {
       }
     }
   });
-  object.setProps({ errors });
+  if (!isEqual(object.props.errors, errors)) {
+    object.setProps({ errors });
+  }
 
   if (Object.entries(errors).length > 0) {
     return false;

@@ -69,9 +69,10 @@ export default class Registration extends Block {
           this.setProps({ firstNameValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'С заглавной рус. / англ. буквы',
+        text: 'Only letters. The first is the capital',
         rules: {
           pattern: '(^[A-Z]{1}[a-z\\-]{1,14}$)|(^[А-Я]{1}[а-я\\-]{1,14}$)',
         },
@@ -89,9 +90,10 @@ export default class Registration extends Block {
           this.setProps({ secondNameValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'С заглавной рус. / англ. буквы',
+        text: 'Only letters. The first is the capital',
         rules: {
           pattern: '(^[A-Z]{1}[a-z\\-]{1,14}$)|(^[А-Я]{1}[а-я\\-]{1,14}$)',
         },
@@ -109,11 +111,12 @@ export default class Registration extends Block {
           this.setProps({ emailValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'Некорректный email',
+        text: 'Invalid email',
         rules: {
-          pattern: '^(?!.*@.*@.*$)(?!.*@.*--.*\\..*$)(?!.*@.*-\\..*$)(?!.*@.*-$)((.*)?@.+(\\..{1,11})?)$',
+          pattern: '[\\w.-]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9]+',
         },
       },
     });
@@ -131,7 +134,7 @@ export default class Registration extends Block {
         },
       },
       required: {
-        text: 'Некорректные данные',
+        text: 'Only letters, numbers and _',
         rules: {
           pattern: '^(?=.*[A-Za-z])[A-Za-z0-9_\\-]{3,20}$',
         },
@@ -149,9 +152,10 @@ export default class Registration extends Block {
           this.setProps({ phoneValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'Некорректный номер телефона',
+        text: 'Invalid phone',
         rules: {
           pattern: '^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{10,15}$',
         },
@@ -169,9 +173,10 @@ export default class Registration extends Block {
           this.setProps({ passwordValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'Мин. 8 символов. Обязательно хотя бы одна заглавная буква и цифра',
+        text: 'Min 8 characters. Required to have a capital letter and a number',
         rules: {
           pattern: '^(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,40}$',
         },

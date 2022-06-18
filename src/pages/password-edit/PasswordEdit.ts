@@ -64,9 +64,10 @@ export default class PasswordEdit extends Block {
           this.setProps({ passwordValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'Мин. 8 символов. Обязательно хотя бы одна заглавная буква и цифра',
+        text: 'Min 8 characters. Required to have a capital letter and a number',
         rules: {
           pattern: '^(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,40}$',
         },
@@ -84,9 +85,10 @@ export default class PasswordEdit extends Block {
           this.setProps({ passwordConfirmValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'Мин. 8 символов. Обязательно хотя бы одна заглавная буква и цифра',
+        text: 'Min 8 characters. Required to have a capital letter and a number',
         rules: {
           pattern: '^(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,40}$',
         },

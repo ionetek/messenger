@@ -64,9 +64,10 @@ export default class Login extends Block {
           this.setProps({ emailValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'Некорректный email',
+        text: 'Invalid email',
         rules: {
           pattern: '[\\w.-]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9]+',
         },
@@ -84,9 +85,10 @@ export default class Login extends Block {
           this.setProps({ passwordValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
-        text: 'Некорректный пароль',
+        text: 'Invalid password',
         rules: {
           min: 8,
         },

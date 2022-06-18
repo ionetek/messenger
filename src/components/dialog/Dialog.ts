@@ -66,6 +66,7 @@ export default class Dialog extends Block {
           this.setProps({ messageValue: e.target.value });
           validate(this);
         },
+        focus: () => validate(this),
       },
       required: {
         text: 'Введите сообщение',
