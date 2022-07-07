@@ -7,7 +7,6 @@
     "strictNullChecks": true,
     "target": "es2018",
     "moduleResolution": "node",
-    "module": "esnext",
     "typeRoots": [
       "./node_modules/@types",
       "./typings"
@@ -16,5 +15,8 @@
   "include": [
     "src",
     "typings/global/index.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
