@@ -80,13 +80,11 @@ export default class AccountEdit extends Block {
 
   handleSubmit(target: Event) {
     if (validate(this, true)) {
-      const formData: IUserInfoData = {};
-      // @ts-ignore
-      Object.entries(target).forEach(([key, child]) => {
-        // @ts-ignore
-        if (child.nodeName === 'INPUT') {
-          // @ts-ignore
-          formData[child.name] = child.value;
+      const formData: any = {};
+
+      Object.entries(target).forEach((child: any) => {
+        if (child[1].nodeName === 'INPUT') {
+          formData[child[1].name] = child[1].value;
         }
       });
 

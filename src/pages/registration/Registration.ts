@@ -55,13 +55,11 @@ export default class Registration extends Block {
 
   handleSubmit(target: any) {
     if (validate(this, true)) {
-      const formData: IRegistrationData = {};
-      // @ts-ignore
-      Object.entries(target).forEach(([key, child]) => {
-        // @ts-ignore
-        if (child.nodeName === 'INPUT') {
-          // @ts-ignore
-          formData[child.name] = child.value;
+      const formData: any = {};
+
+      Object.entries(target).forEach((child: any) => {
+        if (child[1].nodeName === 'INPUT') {
+          formData[child[1].name] = child[1].value;
         }
       });
 
@@ -71,8 +69,7 @@ export default class Registration extends Block {
         },
       });
 
-      authController.signUp(formData).then((r) => {
-        console.log('R', r);
+      authController.signUp(formData).then(() => {
         store.setState({
           registrationPage: {
             isLoading: false,

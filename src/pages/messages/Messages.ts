@@ -22,12 +22,8 @@ export default class Messages extends Block {
     }
 
     requestMessages(token: string, chatId: number) {
-      let userId;
-      if (store.getState().currentUser.id) {
-        userId = store.getState().currentUser.id;
-      } else {
-        userId = localStorage.getItem('userId');
-      }
+      const userId = store.getState().currentUser.id ?? localStorage.getItem('userId');
+
       messageController.connect({
         userId,
         chatId,

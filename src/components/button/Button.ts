@@ -3,12 +3,7 @@ import Loader from '../loader/Loader';
 
 export default class Button extends Block {
   render() {
-    let cl;
-    if (this.props.className) {
-      cl = this.props.className;
-    } else {
-      cl = '';
-    }
+    const className = this.props.className ?? '';
 
     this.children.loader = new Loader({
       className: 'spinner-border-xs',
@@ -17,7 +12,7 @@ export default class Button extends Block {
     const temp = `
                         <button 
                             type="<% if (this.type) { %><% this.type %><% } %>" 
-                            class="${cl}" 
+                            class="${className}" 
                             <% if (this.isLoading) { %>
                                 disabled
                             <% } %> 
@@ -31,7 +26,6 @@ export default class Button extends Block {
                             
                         </button>
                     `;
-    // В данном случае render возвращает строкой разметку из шаблонизатора
     return this.compile(temp, this.props);
   }
 }

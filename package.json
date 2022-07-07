@@ -7,7 +7,7 @@
     "dev": "parcel build ./static/index.html",
     "build": "parcel build ./static/index.html && cp -R ./static/images ./dist",
     "watch": "parcel ./static/index.html --open --port 3000 && cp -R ./static/images ./dist",
-    "test": "./node_modules/.bin/mocha"
+    "test": "mocha --require ts-node/register src/**/*.test.ts"
   },
   "alias": {
     "nanoid": "./node_modules/nanoid/index"

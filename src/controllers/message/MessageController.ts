@@ -1,6 +1,7 @@
 import { showToast } from '../../utils/toast/Toast';
 import config from '../../config';
 import { store } from '../../store';
+import { ABNORMAL_CLOSURE } from '../../utils/wsEventCodes/WsEventCodes';
 
 class MessageController {
     private _ws: WebSocket;
@@ -70,7 +71,7 @@ class MessageController {
       }
 
       // OTHER CODES https://www.iana.org/assignments/websocket/websocket.xhtml#table-close-code-number-range
-      if (event.code === 1006) {
+      if (event.code === ABNORMAL_CLOSURE) {
         this._reconnect();
       }
     }

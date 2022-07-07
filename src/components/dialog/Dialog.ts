@@ -56,13 +56,11 @@ export default class Dialog extends Block {
 
   handleSubmit(target: any) {
     if (validate(this, true)) {
-      const formData = {} as IDialogForm;
-      // @ts-ignore
-      Object.entries(target).forEach(([key, child]) => {
-        // @ts-ignore
-        if (child.nodeName === 'INPUT' || child.nodeName === 'TEXTAREA') {
-          // @ts-ignore
-          formData[child.name] = child.value;
+      const formData: any = {};
+
+      Object.entries(target).forEach((child: any) => {
+        if (child[1].nodeName === 'INPUT' || child[1].nodeName === 'TEXTAREA') {
+          formData[child[1].name] = child[1].value;
         }
       });
       messageController.sendMessage(formData.message);

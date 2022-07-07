@@ -1,15 +1,5 @@
 import Block from '../../core/block/Block';
-
-function isEqual(a: TObj, b: TObj) {
-  // @ts-ignore
-  if (Object.entries(a).length !== Object.entries(b).length) return false;
-  // @ts-ignore
-  for (let i = 0; i < Object.entries(a).length; i++) {
-    // @ts-ignore
-    if (a[i] !== b[i]) return false;
-  }
-  return true;
-}
+import isEqual from '../isEqual/IsEqual';
 
 const validate = (object: Block, strict = false) => {
   // Валидация бывает строгая и нестрогая. За это отвечает параметр strict
@@ -34,8 +24,9 @@ const validate = (object: Block, strict = false) => {
           r.rules.min = 1;
         }
 
-        // @ts-ignore
-        const value = child.getContent()!.querySelector('input, textarea').value.trim();
+        const input = child.getContent()!.querySelector('input, textarea') as HTMLInputElement;
+
+        const value = input ? input!.value.trim() : '';
 
         if ((value.length >= 1 && strict === false) || strict === true) {
           // Проверяем MIN

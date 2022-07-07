@@ -3,12 +3,12 @@ import config from '../../config';
 import { store } from '../../store';
 import { showToast } from '../../utils/toast/Toast';
 import router from '../../router';
+import { errorHandler } from '../../utils/errorHandler/ErrorHandler';
 
 class AuthController {
   public signIn(data: ILoginData) {
     return Client
       .post(`${config.API_URL}/auth/signin`, {
-        withCredentials: true,
         data: JSON.stringify(data),
 
       })
@@ -17,11 +17,7 @@ class AuthController {
         return true;
       })
       .catch((e) => {
-        if (e.reason) {
-          showToast(e.reason, 'error');
-        } else {
-          showToast('Something went wrong', 'error');
-        }
+        errorHandler(e);
         return false;
       });
   }
@@ -29,7 +25,6 @@ class AuthController {
   public signUp(data: IRegistrationData) {
     return Client
       .post(`${config.API_URL}/auth/signup`, {
-        withCredentials: true,
         data: JSON.stringify(data),
 
       })
@@ -38,21 +33,14 @@ class AuthController {
         return true;
       })
       .catch((e) => {
-        if (e.reason) {
-          showToast(e.reason, 'error');
-        } else {
-          showToast('Something went wrong', 'error');
-        }
+        errorHandler(e);
         return false;
       });
   }
 
   public signOut() {
     Client
-      .post(`${config.API_URL}/auth/logout`, {
-        withCredentials: true,
-
-      })
+      .post(`${config.API_URL}/auth/logout`)
       .then(() => {
         router.go('/login');
       })
@@ -63,10 +51,7 @@ class AuthController {
 
   public checkAuth() {
     return Client
-      .get(`${config.API_URL}/auth/user`, {
-        withCredentials: true,
-
-      })
+      .get(`${config.API_URL}/auth/user`)
       .then((response: any) => {
         const user = response;
         user.isLoading = false;

@@ -16,6 +16,8 @@ declare type TProps = Record<string, any>;
 // eslint-disable-next-line no-unused-vars
 declare type TObj = Record<string, any> | null;
 // eslint-disable-next-line no-unused-vars
+declare type TQueryData = Record<string, any>;
+// eslint-disable-next-line no-unused-vars
 declare type TState = Record<string, any>;
 // eslint-disable-next-line no-unused-vars
 declare type TAccess = 'public' | 'protected' | '';
@@ -26,8 +28,11 @@ declare interface IRouterRarams {
     [key: string]: number | null
 }
 
-declare interface IDialogForm {
-    message: string
+declare interface IQueryOptions {
+    headers?: any,
+    method?: string,
+    data?: any,
+    withCredentials?: boolean
 }
 
 declare interface IUserInfoData {
@@ -45,8 +50,8 @@ declare interface IPasswordUpdateData {
 }
 
 declare interface ILoginData {
-    login?: string,
-    password?: string,
+    login?: any,
+    password?: any,
 }
 
 declare interface IRegistrationData {
@@ -63,9 +68,9 @@ declare interface INewChatData {
 }
 
 declare interface IWSOptions {
-    userId?: number,
-    chatId?: number,
-    token?: string
+    userId: number,
+    chatId: number,
+    token: string
 }
 
 declare interface IGetMessagesOptions {

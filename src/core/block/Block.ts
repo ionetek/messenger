@@ -12,7 +12,7 @@ class Block {
       FLOW_RENDER: 'flow:render',
     } as const;
 
-    protected _element: Nullable<HTMLElement> = null;
+    protected _element: HTMLElement;
 
     public id = uuid();
 
@@ -169,37 +169,31 @@ class Block {
         propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
       });
 
-      const fragment = this._createDocumentElement('template');
+      const fragment: any = this._createDocumentElement('template');
 
       fragment.innerHTML = new Templator(template).compile(propsAndStubs);
 
       Object.values(this.children).forEach((child) => {
-        // @ts-ignore
         const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
         if (stub) {
           stub.replaceWith(child.getContent());
         }
       });
-      // @ts-ignore
       return fragment.content;
     }
 
-    // @ts-ignore
     get element(): HTMLElement {
-      // @ts-ignore
       return this._element;
     }
 
     private _render(): HTMLElement | void {
       const block = this.render();
-      // @ts-ignore
-      const newElement = block.firstElementChild;
+
+      const newElement: any = block.firstElementChild;
 
       if (this._element) {
-        // @ts-ignore
         this._element.replaceWith(newElement);
       }
-      // @ts-ignore
       this._element = newElement;
       this._addEvents();
     }
@@ -209,7 +203,7 @@ class Block {
       return document.createElement('div');
     }
 
-    getContent() {
+    getContent(): HTMLElement {
       return this.element;
     }
 
@@ -242,7 +236,6 @@ class Block {
     }
 
     public show(force: boolean = false) {
-      // this.getContent()!.style.display = 'flex';
       if (force) {
             this.getContent()!.classList.add('route-active');
       } else {

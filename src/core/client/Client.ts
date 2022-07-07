@@ -12,7 +12,7 @@ const defaultHeaders = {
 };
 
 // Необязательный метод
-function queryStringify(data: TObj) {
+function queryStringify(data = {} as TQueryData) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
@@ -23,21 +23,19 @@ function queryStringify(data: TObj) {
 }
 
 class Client {
-    get = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    get = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.GET }, options!.timeout);
 
-    post = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+    post = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.POST }, options!.timeout);
 
-    put = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+    put = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.PUT }, options!.timeout);
 
     delete = (url: string, options: TObj = {}) => this.request(url, {
       ...options,
       method: METHODS.DELETE,
-    }, options.timeout);
+    }, options!.timeout);
 
-    request = (url: string, options: TObj = {}, timeout = 10000) => {
-      let { headers, method, data } = options;
-
-      headers = headers || defaultHeaders;
+    request = (url: string, options: IQueryOptions, timeout = 10000) => {
+      const { headers = defaultHeaders, method, data } = options;
 
       return new Promise((resolve, reject) => {
         if (!method) {
@@ -48,11 +46,8 @@ class Client {
         const xhr = new window.XMLHttpRequest();
         const isGet = method === METHODS.GET;
 
-        if (options.withCredentials) {
-          xhr.withCredentials = true;
-        } else {
-          xhr.withCredentials = false;
-        }
+        xhr.withCredentials = true;
+
         xhr.open(
           method,
           isGet && !!data
@@ -73,7 +68,7 @@ class Client {
             resp = JSON.parse(xhr.response);
           }
 
-          if (xhr.status === 200) {
+          if (xhr.status >= 200 && xhr.status < 300) {
             resolve(resp);
           } else {
             reject(resp);

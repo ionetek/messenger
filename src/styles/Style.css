@@ -7,6 +7,7 @@
   --green: #00d573;
   --green-hover: #01C76C;
   --green-active: #03B965;
+  --gray: #EDEFF1;
 }
 * {
     box-sizing: border-box;
