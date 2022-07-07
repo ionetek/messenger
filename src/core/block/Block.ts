@@ -1,6 +1,7 @@
-import { nanoid } from 'nanoid';
+import { v4 as uuid } from 'uuid';
 import EventBus from '../eventbus/EventBus';
 import Templator from '../templator/Templator';
+import router from '../../router';
 
 // Нельзя создавать экземпляр данного класса
 class Block {
@@ -13,11 +14,24 @@ class Block {
 
     protected _element: Nullable<HTMLElement> = null;
 
-    public id = nanoid(6);
+    public id = uuid();
 
     public children: { [id: string]: Block } = {};
 
-    public customEvents: any[] = [];
+    // Дефолтный customEvent для поддержки роутерных ссылок
+    public customEvents: any[] = [{
+      selector: '.router-link',
+      events: {
+        click: (e: any) => {
+          e.preventDefault();
+          if (e.currentTarget.getAttribute('router-force')) {
+            router.go(e.currentTarget.href, true);
+          } else {
+            router.go(e.currentTarget.href);
+          }
+        },
+      },
+    }];
 
     protected eventBus: () => EventBus;
 
@@ -29,7 +43,7 @@ class Block {
       this.children = children;
 
       if (customEvents.length > 0) {
-        this.customEvents = customEvents;
+        this.customEvents = [...this.customEvents, ...customEvents];
       }
 
       const eventBus = new EventBus();
@@ -86,8 +100,18 @@ class Block {
 
       this.customEvents.forEach((elem) => {
         Object.keys(elem.events).forEach((eventName) => {
-          if (this.element!.querySelector(elem.selector)) {
-                    this.element!.querySelector(elem.selector)!.addEventListener(eventName, elem.events[eventName]);
+          if (this.element) {
+            if (this.element!.querySelectorAll(elem.selector).length > 0) {
+                        this.element!.querySelectorAll(elem.selector).forEach((currentValue) => {
+                          currentValue.removeEventListener(eventName, elem.events[eventName], true);
+                          // Проверяем, не навесили ли мы на этот элемент eventListener ранее
+                          if (!currentValue.getAttribute(`event-${eventName}`)) {
+                            currentValue.addEventListener(eventName, elem.events[eventName]);
+                          }
+                          // Добавляем на элемент специальный атрибут, указывающий на то, что на него навешен eventListener
+                          currentValue.setAttribute(`event-${eventName}`, true);
+                        });
+            }
           }
         });
       });
@@ -104,11 +128,12 @@ class Block {
 
     protected init() {
       this._createResources();
-      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+      this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
     private _componentDidMount() {
       this.componentDidMount();
+      this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
 
     protected componentDidMount() {
@@ -134,7 +159,6 @@ class Block {
       if (!nextProps) {
         return;
       }
-
       Object.assign(this.props, nextProps);
     };
 
@@ -160,25 +184,29 @@ class Block {
       return fragment.content;
     }
 
-    get element() {
+    // @ts-ignore
+    get element(): HTMLElement {
+      // @ts-ignore
       return this._element;
     }
 
-    private _render() {
+    private _render(): HTMLElement | void {
       const block = this.render();
       // @ts-ignore
       const newElement = block.firstElementChild;
 
       if (this._element) {
+        // @ts-ignore
         this._element.replaceWith(newElement);
       }
+      // @ts-ignore
       this._element = newElement;
       this._addEvents();
     }
 
     // Переопределяется пользователем. Необходимо вернуть разметку
-    protected render() {
-
+    protected render(): HTMLElement {
+      return document.createElement('div');
     }
 
     getContent() {
@@ -211,6 +239,38 @@ class Block {
       // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
       const element = document.createElement(tagName);
       return element;
+    }
+
+    public show(force: boolean = false) {
+      // this.getContent()!.style.display = 'flex';
+      if (force) {
+            this.getContent()!.classList.add('route-active');
+      } else {
+        if (this.getContent()) {
+                this.getContent()!.classList.add('route-hidden');
+
+                setTimeout(() => {
+                    this.getContent()!.classList.remove('route-hidden');
+                    this.getContent()!.classList.add('route-active');
+                }, 200);
+        }
+      }
+    }
+
+    public hide() {
+        this.getContent()!.classList.remove('route-active');
+        this.getContent()!.classList.add('route-hidden');
+    }
+
+    public destroy() {
+      if (this._element) {
+        this._element.remove();
+        this.onDestroy();
+      }
+    }
+
+    public onDestroy() {
+
     }
 }
 

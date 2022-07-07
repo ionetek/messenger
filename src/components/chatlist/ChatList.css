@@ -1,8 +1,17 @@
 .chat-list {
     width: 100%;
-    height: calc( 100% - 160px);
+    /*height: calc( 100% - 160px);*/
+    height: calc( 100vh - 190px);
     /*overflow-y: scroll;*/
     overflow: hidden;
+    overflow-y: scroll;
+}
+.chat-list__header {
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    display: flex;
 }
 .chat-list__item {
     padding: 15px;
@@ -49,6 +58,9 @@
     &:hover {
          background-color: #EDEFF1;
      }
+    &-active {
+             background-color: #EDEFF1;
+    }
 }
 .message-new-count {
     padding: 3px 8px;

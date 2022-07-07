@@ -41,7 +41,7 @@ export default class Templator {
           }
         } else if (row !== '') {
           if (row.replace(/"/g, '\\\\"').trim()) {
-            templateFunc += `templateFuncRows.push("${row.replace(/\r?\n/g, '').replace(/"/g, '\\"').trim()}");`;
+            templateFunc += `templateFuncRows.push("${row.replace(/\r?\n/g, '').replace(/"/g, '\\"')}");`;
           }
         } else {
           templateFunc += '';

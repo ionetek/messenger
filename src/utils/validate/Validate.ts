@@ -1,8 +1,11 @@
 import Block from '../../core/block/Block';
 
 function isEqual(a: TObj, b: TObj) {
+  // @ts-ignore
   if (Object.entries(a).length !== Object.entries(b).length) return false;
+  // @ts-ignore
   for (let i = 0; i < Object.entries(a).length; i++) {
+    // @ts-ignore
     if (a[i] !== b[i]) return false;
   }
   return true;
@@ -13,7 +16,6 @@ const validate = (object: Block, strict = false) => {
   // НЕСТРОГАЯ ВАЛИДАЦИЯ - Не проверяет поле, если в него не было введено ни одного символа.
   // Это сделано, чтобы при blur всю форму не заваливало ошибками
   // СТРОГАЯ ВАЛИДАЦИЯ - проверяет все поля и выводит все ошибки. Срабатывает при submit
-  console.log('Validate');
   const errors: TObj = [];
   Object.entries(object.children).forEach(([key, child]) => {
     if (object.children[key].props.required) {

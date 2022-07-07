@@ -1,11 +1,16 @@
-const METHODS = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE',
+// eslint-disable-next-line no-shadow
+enum METHODS {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    PATCH = 'PATCH',
+    DELETE = 'DELETE',
+}
+
+const defaultHeaders = {
+  'Content-type': 'application/json; charset=UTF-8',
 };
 
-// Самая простая версия. Реализовать штучку со всеми проверками им предстоит в конце спринта
 // Необязательный метод
 function queryStringify(data: TObj) {
   if (typeof data !== 'object') {
@@ -29,8 +34,10 @@ class Client {
       method: METHODS.DELETE,
     }, options.timeout);
 
-    request = (url: string, options: TObj = {}, timeout = 5000) => {
-      const { headers = {}, method, data } = options;
+    request = (url: string, options: TObj = {}, timeout = 10000) => {
+      let { headers, method, data } = options;
+
+      headers = headers || defaultHeaders;
 
       return new Promise((resolve, reject) => {
         if (!method) {
@@ -38,9 +45,14 @@ class Client {
           return;
         }
 
-        const xhr = new XMLHttpRequest();
+        const xhr = new window.XMLHttpRequest();
         const isGet = method === METHODS.GET;
 
+        if (options.withCredentials) {
+          xhr.withCredentials = true;
+        } else {
+          xhr.withCredentials = false;
+        }
         xhr.open(
           method,
           isGet && !!data
@@ -53,6 +65,20 @@ class Client {
         });
 
         xhr.onload = function () {
+          let resp: any = '';
+
+          if (xhr.response === 'OK') {
+            resp = { status: 'OK' };
+          } else {
+            resp = JSON.parse(xhr.response);
+          }
+
+          if (xhr.status === 200) {
+            resolve(resp);
+          } else {
+            reject(resp);
+          }
+
           resolve(xhr);
         };
 
@@ -70,3 +96,5 @@ class Client {
       });
     };
 }
+
+export default new Client();

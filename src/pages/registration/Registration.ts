@@ -1,9 +1,14 @@
 import Block from '../../core/block/Block';
 import Input from '../../components/input/Input';
 import validate from '../../utils/validate/Validate';
+import authController from '../../controllers/auth/AuthController';
+import { store } from '../../store';
+import Button from '../../components/button/Button';
 
 export default class Registration extends Block {
   constructor(props: TProps) {
+    document.title = 'Registration';
+
     // CHILDREN
 
     const errors: any = [];
@@ -15,6 +20,7 @@ export default class Registration extends Block {
       phoneValue: '',
       passwordValue: '',
       passwordConfirmValue: '',
+      isLoading: store.getState().registrationPage.isLoading,
 
     };
 
@@ -39,11 +45,17 @@ export default class Registration extends Block {
     super(propsAndChildren, customEvents);
   }
 
-  handleSubmit(target: any) {
-    const isValidated = validate(this, true);
+  componentDidMount() {
+    store.subscribe((state) => {
+      this.setProps({
+        isLoading: state.registrationPage.isLoading,
+      });
+    });
+  }
 
-    if (isValidated === true) {
-      const formData = {};
+  handleSubmit(target: any) {
+    if (validate(this, true)) {
+      const formData: IRegistrationData = {};
       // @ts-ignore
       Object.entries(target).forEach(([key, child]) => {
         // @ts-ignore
@@ -53,7 +65,20 @@ export default class Registration extends Block {
         }
       });
 
-      console.log(formData);
+      store.setState({
+        registrationPage: {
+          isLoading: true,
+        },
+      });
+
+      authController.signUp(formData).then((r) => {
+        console.log('R', r);
+        store.setState({
+          registrationPage: {
+            isLoading: false,
+          },
+        });
+      });
     }
   }
 
@@ -183,12 +208,20 @@ export default class Registration extends Block {
       },
     });
 
+    const button = new Button({
+      text: 'Register',
+      type: 'submit',
+      className: 'btn btn-success btn-lg mw200',
+      isLoading: this.props.isLoading,
+    });
+
     this.children.firstname = firstname;
     this.children.secondname = secondname;
     this.children.email = email;
     this.children.login = login;
     this.children.phone = phone;
     this.children.password = password;
+    this.children.button = button;
 
     const ctx = this.children;
     const temp = `<div class="main">
@@ -211,10 +244,10 @@ export default class Registration extends Block {
                             <% this.password %>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-success btn-lg mw200">Register</button>
+                            <% this.button %>
                         </div>
                         <div class="row justify-content-center">
-                            <a href="/login.html" class="text-gray">I have an account</a>
+                            <a href="/login" class="text-gray router-link">I have an account</a>
                         </div>
                     </form>
                 </div>

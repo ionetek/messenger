@@ -26,11 +26,17 @@ body {
 h1, .h1, h2, .h2 {
     font-family: Gilroy;
 }
+.text-right {
+    text-align: right;
+}
 .text-gray {
     color: #536576;
 }
+.text-success {
+    color: var(--green);
+}
 .text-red {
-    color:#FF001A;
+    color: rgb(255, 71, 120);
 }
 .text-center {
     text-align: center;
@@ -60,6 +66,12 @@ h1, .h1, h2, .h2 {
     display: flex;
     flex-direction: row;
     align-items: center;
+    position: absolute;
+    background: #fff;
+    width: 100%;
+    z-index: 0;
+    opacity: 1;
+    transition: opacity 100ms ease-in;
 }
 .sidebar {
     width: 420px;
@@ -69,6 +81,9 @@ h1, .h1, h2, .h2 {
     align-items: flex-start;
     padding: 30px;
 
+}
+.sidebar > div {
+    width: 100%;
 }
 .sidebar + .content {
     flex: 1 0 0%;
@@ -121,6 +136,8 @@ h1, .h1, h2, .h2 {
     font-size: 16px;
     text-decoration: none;
     text-align: center;
+    cursor: pointer;
+        white-space: nowrap;
 }
 .btn-lg {
     height: 58px;
@@ -130,6 +147,7 @@ h1, .h1, h2, .h2 {
 }
 .btn > img {
     margin: 9px;
+    vertical-align: middle;
 }
 .btn-success {
     background: var(--green);
@@ -153,7 +171,14 @@ h1, .h1, h2, .h2 {
 .btn-nav:active{
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.14);
 }
+.btn.disabled, .btn:disabled {
+    opacity: .75;
+    pointer-events: none;
+}
 /* MARGINS */
+.m-0 {
+    margin: 0!important;
+}
 .mb-0 {
     margin-bottom: 0!important;
 }
@@ -230,6 +255,9 @@ h1, .h1, h2, .h2 {
          width: 100%;
          padding: 10px 15px;
          outline: none;
+         &-bg-gray {
+                       background:#edeff1;
+             }
      }
     &__form-control-lg {
          height: 58px;
@@ -250,8 +278,9 @@ h1, .h1, h2, .h2 {
     padding: 5px 0px;
      }
     &__has-error {
-         border: 1px solid #FF001A;;
+         border: 1px solid #FF001A;
      }
+
 
 }
 .profile-info {
@@ -263,9 +292,21 @@ h1, .h1, h2, .h2 {
          border-radius: 16px;
          overflow: hidden;
          position: relative;
+         display:block;
          &:hover .profile-info__avatar-hover {
              display: flex!important;
          }
+         & .profile-info__avatar-button {
+                display: none;
+         }
+         & .profile-info__avatar-img {
+                         width: 106px;
+                         height: 106px;
+                         position: relative;
+                         z-index: 11;
+                         background-size: cover ;
+                         background-position: center center;
+                  }
      }
     &__avatar img {
          width: 106px;
@@ -314,4 +355,19 @@ h1, .h1, h2, .h2 {
     height: 1px;
     border-bottom: 1px solid #E4E7E9;
     margin: 20px 0;
+}
+/*ROUTING ANIMATION*/
+.route-enter {
+opacity: 0!important;
+}
+.route-enter-done {
+opacity: 1!important;
+}
+.route-active {
+opacity: 1;
+z-index: 1;
+}
+.route-hidden {
+opacity: 0;
+z-index: 0;
 }

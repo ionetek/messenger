@@ -1,16 +1,18 @@
+import { store } from '../../store';
 import Block from '../../core/block/Block';
 import Input from '../../components/input/Input';
 import validate from '../../utils/validate/Validate';
+import AuthController from '../../controllers/auth/AuthController';
+import Button from '../../components/button/Button';
 
 export default class Login extends Block {
   constructor(props: TProps) {
-    // CHILDREN
-
+    document.title = 'Login';
     const errors: any = [];
     const defaultValues = {
-      emailValue: '',
+      loginValue: '',
       passwordValue: '',
-      firstnameValue: '',
+      isLoading: store.getState().loginPage.isLoading,
     };
 
     const customEvents = [
@@ -26,6 +28,7 @@ export default class Login extends Block {
           },
         },
       },
+
     ];
 
     // Объединяем текущие пропсы компонента и его детей
@@ -34,11 +37,19 @@ export default class Login extends Block {
     super(propsAndChildren, customEvents);
   }
 
+  componentDidMount() {
+    store.subscribe((state) => {
+      this.setProps({
+        isLoading: state.loginPage.isLoading,
+      });
+    });
+  }
+
   handleSubmit(target: any) {
     const isValidated = validate(this, true);
 
     if (isValidated === true) {
-      const formData = {};
+      const formData: ILoginData = {};
       // @ts-ignore
       Object.entries(target).forEach(([key, child]) => {
         // @ts-ignore
@@ -47,29 +58,38 @@ export default class Login extends Block {
           formData[child.name] = child.value;
         }
       });
-
-      console.log(formData);
+      store.setState({
+        loginPage: {
+          isLoading: true,
+        },
+      });
+      AuthController.signIn(formData).then(() => {
+        store.setState({
+          loginPage: {
+            isLoading: false,
+          },
+        });
+      });
     }
   }
 
   render() {
-    const email = new Input({
-      label: 'Email',
-      name: 'email',
+    const login = new Input({
+      label: 'Login',
+      name: 'login',
       type: 'text',
       errors: this.props.errors,
-      value: this.props.emailValue,
+      value: this.props.loginValue,
       events: {
         blur: (e: any) => {
-          this.setProps({ emailValue: e.target.value });
+          this.setProps({ loginValue: e.target.value });
           validate(this);
         },
-        focus: () => validate(this),
       },
       required: {
-        text: 'Invalid email',
+        text: 'Only letters, numbers and _',
         rules: {
-          pattern: '[\\w.-]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9]+',
+          pattern: '^(?=.*[A-Za-z])[A-Za-z0-9_\\-]{3,20}$',
         },
       },
     });
@@ -95,8 +115,16 @@ export default class Login extends Block {
       },
     });
 
-    this.children.email = email;
+    const button = new Button({
+      text: 'Login',
+      type: 'submit',
+      className: 'btn btn-success btn-lg mw200',
+      isLoading: this.props.isLoading,
+    });
+
+    this.children.login = login;
     this.children.password = password;
+    this.children.button = button;
 
     const ctx = this.children;
     const temp = `<div class="main">
@@ -105,16 +133,16 @@ export default class Login extends Block {
                     <h1 class="text-center">Login</h1>
                     <form id="loginForm">
                         <div class="row">
-                            <% this.email %>
+                            <% this.login %>
                         </div>
                         <div class="row">
                             <% this.password %>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-success btn-lg mw200">Login</button>
+                            <% this.button %>
                         </div>
                         <div class="row justify-content-center">
-                            <a href="/registration.html" class="text-gray">Create an account</a>
+                            <a class="text-gray router-link" href="/registration">Create an account</a>
                         </div>
                     </form>
                 </div>
