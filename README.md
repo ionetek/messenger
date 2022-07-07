@@ -40,12 +40,6 @@ Demo:
 -----
 
 * [Login](https://statuesque-kringle-291216.netlify.app/)
-* [Registration](https://statuesque-kringle-291216.netlify.app/registration.html)
-* [Empty dialog](https://statuesque-kringle-291216.netlify.app/index.html)
-* [Dialog](https://statuesque-kringle-291216.netlify.app/messages.html)
-* [Account](https://statuesque-kringle-291216.netlify.app/account.html)
-* [Account edit](https://statuesque-kringle-291216.netlify.app/account-edit.html)
-* [Password edit](https://statuesque-kringle-291216.netlify.app/password-edit.html)
 * [404 Error](https://statuesque-kringle-291216.netlify.app/404.html)
 * [500 Error](https://statuesque-kringle-291216.netlify.app/500.html)
 
@@ -74,7 +68,7 @@ History
 
 ### Sprint 3
 
-✅ Implemented full-fledged routing with obtaining parameters from the SEO URL
+✅ Implemented full-fledged routing with obtaining parameters from the SEO URL and checking access rights
 
 ✅ API created
 
