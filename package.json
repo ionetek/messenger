@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/ionetek/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
+    "@parcel/babel-preset-env": "^2.6.2",
     "express": "4.18.1",
     "nanoid": "4.0.0",
     "parcel": "2.5.0",
