@@ -4,19 +4,19 @@ Messenger for Yandex.Practicum
 A messenger for Yandex Practicum using its own template engine.
 
 Ссылка на Pull
-Request: [https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/5](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/5)
+Request: [https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/6](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/6)
 
 ![img.png](https://oviland.ru/storage/messenger.png)
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
-👉 [Pull request](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/5)
+👉 [Pull request](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/6)
 ---
 Setup
 -----
 Clone the repo:
 
-    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_2
+    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_3
 
 Move to the project path:
 
@@ -31,6 +31,10 @@ Run the project:
     npm run start
 
 Project will be available at http://localhost:3000
+
+Test:
+
+    npm run test
 
 Demo:
 -----
@@ -67,6 +71,20 @@ History
 ✅ ESLint is connected
 
 ✅ Stylelint is connected
+
+### Sprint 3
+
+✅ Implemented full-fledged routing with obtaining parameters from the SEO URL
+
+✅ API created
+
+✅ Sign in, Registration, Account editing, Avatar uploading were implemented
+
+✅ Store created
+
+✅ WebSocket is enabled for chat messages
+
+✅ Tests have been written for the template engine, router, component, request sending module(Mocha, Chai)
 
 Template example
 ----------------
