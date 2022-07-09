@@ -4,6 +4,7 @@ import Input from '../../components/input/Input';
 import validate from '../../utils/validate/Validate';
 import AuthController from '../../controllers/auth/AuthController';
 import Button from '../../components/button/Button';
+import { getFormData } from '../../utils/getFormData/GetFormData';
 
 export default class Login extends Block {
   constructor(props: TProps) {
@@ -19,12 +20,13 @@ export default class Login extends Block {
       {
         selector: '#loginForm',
         events: {
-          submit: (e: any) => {
+          submit: (e: Event) => {
             e.preventDefault();
-            const target = { ...e.target };
+            const target = e.target as HTMLFormElement;
+            const formData = getFormData([...target]);
             // Костыльный метод, блокирующий вызовы blur, при отправке формы
             this.removeChildrenListeners();
-            this.handleSubmit(target);
+            this.handleSubmit(formData);
           },
         },
       },
@@ -45,17 +47,8 @@ export default class Login extends Block {
     });
   }
 
-  handleSubmit(target: any) {
-    const isValidated = validate(this, true);
-
-    if (isValidated === true) {
-      const formData: any = {};
-
-      Object.entries(target).forEach((child: any) => {
-        if (child[1].nodeName === 'INPUT') {
-          formData[child[1].name] = child[1].value;
-        }
-      });
+  handleSubmit(formData: ILoginData) {
+    if (validate(this, true)) {
       store.setState({
         loginPage: {
           isLoading: true,

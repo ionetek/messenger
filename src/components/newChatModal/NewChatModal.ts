@@ -5,6 +5,7 @@ import validate from '../../utils/validate/Validate';
 import CloseIcon from './closeIcon.svg';
 import Button from '../button/Button';
 import chatController from '../../controllers/chat/ChatController';
+import { getFormData } from '../../utils/getFormData/GetFormData';
 
 export default class NewChatModal extends Block {
   constructor(props: TProps) {
@@ -19,12 +20,13 @@ export default class NewChatModal extends Block {
       {
         selector: '#newChatForm',
         events: {
-          submit: (e: any) => {
+          submit: (e: Event) => {
             e.preventDefault();
-            const target = { ...e.target };
+            const target = e.target as HTMLFormElement;
+            const formData = getFormData([...target]);
             // Костыльный метод, блокирующий вызовы blur, при отправке формы
             this.removeChildrenListeners();
-            this.handleSubmit(target);
+            this.handleSubmit(formData);
           },
         },
       },
@@ -45,16 +47,8 @@ export default class NewChatModal extends Block {
     super(propsAndChildren, customEvents);
   }
 
-  handleSubmit(target: any) {
+  handleSubmit(formData: INewChatData) {
     if (validate(this, true)) {
-      const formData: any = {};
-
-      Object.entries(target).forEach((child: any) => {
-        if (child[1].nodeName === 'INPUT') {
-          formData[child[1].name] = child[1].value;
-        }
-      });
-
       this.setProps({ isLoading: true });
       chatController.newChat(formData).then(() => {
         this.setProps({ isLoading: false, isOpened: false, title: '' });

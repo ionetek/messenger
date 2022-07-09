@@ -4,6 +4,7 @@ import validate from '../../utils/validate/Validate';
 import authController from '../../controllers/auth/AuthController';
 import { store } from '../../store';
 import Button from '../../components/button/Button';
+import { getFormData } from '../../utils/getFormData/GetFormData';
 
 export default class Registration extends Block {
   constructor(props: TProps) {
@@ -28,12 +29,13 @@ export default class Registration extends Block {
       {
         selector: '#registrationForm',
         events: {
-          submit: (e: any) => {
+          submit: (e: Event) => {
             e.preventDefault();
-            const target = { ...e.target };
+            const target = e.target as HTMLFormElement;
+            const formData = getFormData([...target]);
             // Костыльный метод, блокирующий вызовы blur, при отправке формы
             this.removeChildrenListeners();
-            this.handleSubmit(target);
+            this.handleSubmit(formData);
           },
         },
       },
@@ -53,16 +55,8 @@ export default class Registration extends Block {
     });
   }
 
-  handleSubmit(target: any) {
+  handleSubmit(formData: IRegistrationData) {
     if (validate(this, true)) {
-      const formData: any = {};
-
-      Object.entries(target).forEach((child: any) => {
-        if (child[1].nodeName === 'INPUT') {
-          formData[child[1].name] = child[1].value;
-        }
-      });
-
       store.setState({
         registrationPage: {
           isLoading: true,

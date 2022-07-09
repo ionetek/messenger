@@ -19,15 +19,19 @@ class Block {
     public children: { [id: string]: Block } = {};
 
     // Дефолтный customEvent для поддержки роутерных ссылок
-    public customEvents: any[] = [{
+    public customEvents: ICustomEvent[] = [{
       selector: '.router-link',
       events: {
-        click: (e: any) => {
+        click: (e: Event) => {
           e.preventDefault();
-          if (e.currentTarget.getAttribute('router-force')) {
-            router.go(e.currentTarget.href, true);
-          } else {
-            router.go(e.currentTarget.href);
+
+          if (e.currentTarget) {
+            const element = e.currentTarget as HTMLElement;
+            if (element.getAttribute('router-force')) {
+              router.go(element.getAttribute('href'), true);
+            } else {
+              router.go(element.getAttribute('href'));
+            }
           }
         },
       },
@@ -35,9 +39,9 @@ class Block {
 
     protected eventBus: () => EventBus;
 
-    public props: any = {};
+    public props: TObj = {};
 
-    constructor(propsAndChildren: {} = {}, customEvents: any[] = []) {
+    constructor(propsAndChildren: {} = {}, customEvents: ICustomEvent[] = []) {
       // Получаем пропсы и отделяем из них children'ов
       const { children, props } = this._getChildren(propsAndChildren);
       this.children = children;
@@ -109,7 +113,7 @@ class Block {
                             currentValue.addEventListener(eventName, elem.events[eventName]);
                           }
                           // Добавляем на элемент специальный атрибут, указывающий на то, что на него навешен eventListener
-                          currentValue.setAttribute(`event-${eventName}`, true);
+                          currentValue.setAttribute(`event-${eventName}`, 'true');
                         });
             }
           }
@@ -169,7 +173,7 @@ class Block {
         propsAndStubs[key] = `<div data-id="${child.id}"></div>`;
       });
 
-      const fragment: any = this._createDocumentElement('template');
+      const fragment = this._createDocumentElement('template') as HTMLTemplateElement;
 
       fragment.innerHTML = new Templator(template).compile(propsAndStubs);
 
@@ -186,10 +190,10 @@ class Block {
       return this._element;
     }
 
-    private _render(): HTMLElement | void {
+    private _render(): any {
       const block = this.render();
 
-      const newElement: any = block.firstElementChild;
+      const newElement = block.firstElementChild as HTMLTemplateElement;
 
       if (this._element) {
         this._element.replaceWith(newElement);
@@ -199,7 +203,7 @@ class Block {
     }
 
     // Переопределяется пользователем. Необходимо вернуть разметку
-    protected render(): HTMLElement {
+    protected render(): any {
       return document.createElement('div');
     }
 

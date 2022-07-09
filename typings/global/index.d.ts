@@ -14,7 +14,7 @@ declare type Values<T extends Record<string, unknown>> = T[Keys<T>];
 // eslint-disable-next-line no-unused-vars
 declare type TProps = Record<string, any>;
 // eslint-disable-next-line no-unused-vars
-declare type TObj = Record<string, any> | null;
+declare type TObj = Record<string, any>;
 // eslint-disable-next-line no-unused-vars
 declare type TQueryData = Record<string, any>;
 // eslint-disable-next-line no-unused-vars
@@ -26,6 +26,15 @@ declare type TChatInfo = Record<string, any>;
 
 declare interface IRouterRarams {
     [key: string]: number | null
+}
+
+declare interface IFormData {
+    [key: string]: string
+}
+
+declare interface ICustomEvent {
+    selector: string,
+    events: any,
 }
 
 declare interface IQueryOptions {
@@ -50,8 +59,8 @@ declare interface IPasswordUpdateData {
 }
 
 declare interface ILoginData {
-    login?: any,
-    password?: any,
+    login?: string,
+    password?: string,
 }
 
 declare interface IRegistrationData {
@@ -65,6 +74,10 @@ declare interface IRegistrationData {
 
 declare interface INewChatData {
     title?: string
+}
+
+declare interface IMessageData {
+    message?: string
 }
 
 declare interface IWSOptions {

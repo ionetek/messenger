@@ -11,6 +11,7 @@ import Input from '../input/Input';
 import MessagesList from '../messagesList/MessagesList';
 import chatController from '../../controllers/chat/ChatController';
 import config from '../../config';
+import { getFormData } from '../../utils/getFormData/GetFormData';
 
 export default class Dialog extends Block {
   constructor(props: TProps = {}) {
@@ -28,12 +29,13 @@ export default class Dialog extends Block {
       {
         selector: '#messageForm',
         events: {
-          submit: (e: any) => {
+          submit: (e: Event) => {
             e.preventDefault();
-            const target = { ...e.target };
+            const target = e.target as HTMLFormElement;
+            const formData = getFormData([...target]);
             // Костыльный метод, блокирующий вызовы blur, при отправке формы
             this.removeChildrenListeners();
-            this.handleSubmit(target);
+            this.handleSubmit(formData);
           },
         },
       },
@@ -54,16 +56,9 @@ export default class Dialog extends Block {
     });
   }
 
-  handleSubmit(target: any) {
+  handleSubmit(formData: IMessageData) {
     if (validate(this, true)) {
-      const formData: any = {};
-
-      Object.entries(target).forEach((child: any) => {
-        if (child[1].nodeName === 'INPUT' || child[1].nodeName === 'TEXTAREA') {
-          formData[child[1].name] = child[1].value;
-        }
-      });
-      messageController.sendMessage(formData.message);
+      messageController.sendMessage(formData);
 
       const self = this;
       setTimeout(() => {

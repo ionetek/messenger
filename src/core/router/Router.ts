@@ -137,7 +137,7 @@ class Router {
       return route;
     }
 
-    go(pathname: string, force: boolean = false) {
+    go(pathname: string | null, force: boolean = false) {
       // Удаляем доменное имя из ссылки
       if (pathname) {
         const pathnameClear = pathname.replace(window.origin, '');

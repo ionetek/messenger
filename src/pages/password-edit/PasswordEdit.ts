@@ -5,6 +5,7 @@ import validate from '../../utils/validate/Validate';
 import { store } from '../../store';
 import accountController from '../../controllers/account/AccountController';
 import Button from '../../components/button/Button';
+import { getFormData } from '../../utils/getFormData/GetFormData';
 
 export default class PasswordEdit extends Block {
   constructor(props: TProps) {
@@ -21,12 +22,13 @@ export default class PasswordEdit extends Block {
       {
         selector: '#passwordEditForm',
         events: {
-          submit: (e: any) => {
+          submit: (e: Event) => {
             e.preventDefault();
-            const target = { ...e.target };
+            const target = e.target as HTMLFormElement;
+            const formData = getFormData([...target]);
             // Костыльный метод, блокирующий вызовы blur, при отправке формы
             this.removeChildrenListeners();
-            this.handleSubmit(target);
+            this.handleSubmit(formData);
           },
         },
       },
@@ -46,15 +48,8 @@ export default class PasswordEdit extends Block {
     });
   }
 
-  handleSubmit(target: Event) {
+  handleSubmit(formData: IPasswordUpdateData) {
     if (validate(this, true)) {
-      const formData: any = {};
-      Object.entries(target).forEach((child) => {
-        if (child[1].nodeName === 'INPUT') {
-          formData[child[1].name] = child[1].value;
-        }
-      });
-
       store.setState({
         passwordEditPage: {
           isLoading: true,

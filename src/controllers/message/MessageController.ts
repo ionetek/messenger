@@ -109,11 +109,13 @@ class MessageController {
       }
     }
 
-    public sendMessage(message: string) {
-      this._ws.send(JSON.stringify({
-        content: message,
-        type: 'message',
-      }));
+    public sendMessage(data: IMessageData) {
+      if (data.message) {
+        this._ws.send(JSON.stringify({
+          content: data.message,
+          type: 'message',
+        }));
+      }
     }
 }
 

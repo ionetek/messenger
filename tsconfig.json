@@ -7,7 +7,7 @@
     "strictNullChecks": true,
     "target": "es2018",
     "moduleResolution": "node",
-    "module": "commonjs",
+    "mo1ule": "commonjs",
     "typeRoots": [
       "./node_modules/@types",
       "./typings"
