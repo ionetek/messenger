@@ -35,7 +35,11 @@ class Client {
     }, options!.timeout);
 
     request = (url: string, options: IQueryOptions, timeout = 10000) => {
-      const { headers = defaultHeaders, method, data } = options;
+      let { headers = {}, method, data } = options;
+
+      if (Object.keys(headers).length == 0 && !(data instanceof FormData)) {
+        headers = defaultHeaders;
+      }
 
       return new Promise((resolve, reject) => {
         if (!method) {

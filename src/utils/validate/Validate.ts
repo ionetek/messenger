@@ -26,9 +26,9 @@ const validate = (object: Block, strict = false) => {
 
         const input = child.getContent()!.querySelector('input, textarea') as HTMLInputElement;
 
-        const value = input ? input!.value.trim() : '';
+        const value = input!.value.trim() ?? '';
 
-        if ((value.length >= 1 && strict === false) || strict === true) {
+        if ((value.length >= 1 && !strict) || strict) {
           // Проверяем MIN
           if (r.rules.min) {
             if (value.length < r.rules.min) {

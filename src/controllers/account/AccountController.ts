@@ -16,9 +16,7 @@ class AccountController {
         showToast('Information updated', 'success');
         router.go('/account');
       })
-      .catch((e) => {
-        errorHandler(e);
-      });
+      .catch(errorHandler);
   }
 
   public updatePassword(data: IPasswordUpdateData) {
@@ -31,27 +29,22 @@ class AccountController {
         showToast('Password updated', 'success');
         router.go('/account');
       })
-      .catch((e) => {
-        errorHandler(e);
-      });
+      .catch(errorHandler);
   }
 
   public updateAvatar(data: FormData) {
     return Client
       .put(`${config.API_URL}/user/profile/avatar`, {
-        headers: false,
         data,
 
       })
-      .then((user) => {
+      .then((user: TObj) => {
         showToast('Avatar updated', 'success');
         store.setState({
           currentUser: user,
         });
       })
-      .catch((e) => {
-        errorHandler(e);
-      });
+      .catch(errorHandler);
   }
 }
 

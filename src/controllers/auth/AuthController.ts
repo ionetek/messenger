@@ -1,7 +1,6 @@
 import Client from '../../core/client/Client';
 import config from '../../config';
 import { store } from '../../store';
-import { showToast } from '../../utils/toast/Toast';
 import router from '../../router';
 import { errorHandler } from '../../utils/errorHandler/ErrorHandler';
 
@@ -14,12 +13,8 @@ class AuthController {
       })
       .then(() => {
         router.go('/messages');
-        return true;
       })
-      .catch((e) => {
-        errorHandler(e);
-        return false;
-      });
+      .catch(errorHandler);
   }
 
   public signUp(data: IRegistrationData) {
@@ -30,12 +25,8 @@ class AuthController {
       })
       .then(() => {
         router.go('/messages');
-        return true;
       })
-      .catch((e) => {
-        errorHandler(e);
-        return false;
-      });
+      .catch(errorHandler);
   }
 
   public signOut() {
@@ -44,15 +35,13 @@ class AuthController {
       .then(() => {
         router.go('/login');
       })
-      .catch(() => {
-        showToast('Something went wrong', 'error');
-      });
+      .catch(errorHandler);
   }
 
   public checkAuth() {
     return Client
       .get(`${config.API_URL}/auth/user`)
-      .then((response: any) => {
+      .then((response: TObj) => {
         const user = response;
         user.isLoading = false;
         store.setState({

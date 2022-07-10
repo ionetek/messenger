@@ -11,10 +11,10 @@ class ChatController {
         data: JSON.stringify(data),
 
       })
-      .then((e: TObj) => {
-        if (e!.id) {
-          router.go(`/messages/${e!.id}`, true);
-          return e!.id;
+      .then((response: TObj) => {
+        if (response!.id) {
+          router.go(`/messages/${response!.id}`, true);
+          return response!.id;
         }
       })
       .catch((e) => {
@@ -26,7 +26,7 @@ class ChatController {
     console.log('ПОЛУЧАЕМ ЧАТЫ');
     return Client
       .get(`${config.API_URL}/chats`)
-      .then((chatList) => {
+      .then((chatList: TObj) => {
         store.setState({
           chatList,
         });
@@ -40,9 +40,9 @@ class ChatController {
     console.log(`ПОЛУЧАЕМ ТОКЕН ДЛЯ ЧАТА ${chatId}`);
     return Client
       .post(`${config.API_URL}/chats/token/${chatId}`)
-      .then((e: TObj) => {
-        console.log(`ТОКЕН ПОЛУЧЕН  : ${e!.token}`);
-        return e!.token;
+      .then((response: TObj) => {
+        console.log(`ТОКЕН ПОЛУЧЕН  : ${response!.token}`);
+        return response!.token;
       })
       .catch((e) => {
         errorHandler(e);
