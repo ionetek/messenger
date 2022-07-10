@@ -5,9 +5,16 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "strictNullChecks": true,
+    "target": "es2018",
     "moduleResolution": "node",
-    "target": "es2018"
+    "module": "commonjs",
+    "typeRoots": [
+      "./node_modules/@types",
+      "./typings"
+    ]
   },
-  "include": ["src", "typings/custom.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    "typings/global/index.d.ts"
+  ]
 }

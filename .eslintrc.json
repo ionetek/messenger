@@ -47,6 +47,18 @@
     "import/prefer-default-export": "off",
     "no-cond-assign": "off",
     "no-new-func": "off",
+    "no-underscore-dangle": "off",
+    "no-constructor-return": "off",
+    "import/no-cycle": "off",
+    "eqeqeq": "off",
+    "camelcase": "off",
+    "no-lonely-if": "off",
+    "no-restricted-syntax": "off",
+    "no-prototype-builtins": "off",
+    "no-continue": "off",
+    "no-param-reassign": "off",
+    "no-return-assign": "off",
+    "no-plusplus": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -56,12 +68,6 @@
         "jsx": "never",
         "ts": "never",
         "tsx": "never"
-      }
-    ],
-    "no-underscore-dangle": [
-      2,
-      {
-        "allowAfterThis": true
       }
     ]
   }

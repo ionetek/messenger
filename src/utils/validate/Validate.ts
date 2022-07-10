@@ -1,19 +1,11 @@
 import Block from '../../core/block/Block';
-
-function isEqual(a: TObj, b: TObj) {
-  if (Object.entries(a).length !== Object.entries(b).length) return false;
-  for (let i = 0; i < Object.entries(a).length; i++) {
-    if (a[i] !== b[i]) return false;
-  }
-  return true;
-}
+import isEqual from '../isEqual/IsEqual';
 
 const validate = (object: Block, strict = false) => {
   // Валидация бывает строгая и нестрогая. За это отвечает параметр strict
   // НЕСТРОГАЯ ВАЛИДАЦИЯ - Не проверяет поле, если в него не было введено ни одного символа.
   // Это сделано, чтобы при blur всю форму не заваливало ошибками
   // СТРОГАЯ ВАЛИДАЦИЯ - проверяет все поля и выводит все ошибки. Срабатывает при submit
-  console.log('Validate');
   const errors: TObj = [];
   Object.entries(object.children).forEach(([key, child]) => {
     if (object.children[key].props.required) {
@@ -32,10 +24,11 @@ const validate = (object: Block, strict = false) => {
           r.rules.min = 1;
         }
 
-        // @ts-ignore
-        const value = child.getContent()!.querySelector('input, textarea').value.trim();
+        const input = child.getContent()!.querySelector('input, textarea') as HTMLInputElement;
 
-        if ((value.length >= 1 && strict === false) || strict === true) {
+        const value = input!.value.trim() ?? '';
+
+        if ((value.length >= 1 && !strict) || strict) {
           // Проверяем MIN
           if (r.rules.min) {
             if (value.length < r.rules.min) {

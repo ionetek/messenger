@@ -2,27 +2,33 @@ import Block from '../../core/block/Block';
 import BackIcon from './backIcon.svg';
 import Input from '../../components/input/Input';
 import validate from '../../utils/validate/Validate';
+import { store } from '../../store';
+import accountController from '../../controllers/account/AccountController';
+import Button from '../../components/button/Button';
+import { getFormData } from '../../utils/getFormData/GetFormData';
 
 export default class PasswordEdit extends Block {
   constructor(props: TProps) {
-    // CHILDREN
+    document.title = 'Edit password';
 
     const errors: any = [];
     const defaultValues = {
       passwordValue: '',
       passwordConfirmValue: '',
+      isLoading: store.getState().passwordEditPage.isLoading,
     };
 
     const customEvents = [
       {
         selector: '#passwordEditForm',
         events: {
-          submit: (e: any) => {
+          submit: (e: Event) => {
             e.preventDefault();
-            const target = { ...e.target };
+            const target = e.target as HTMLFormElement;
+            const formData = getFormData([...target]);
             // Костыльный метод, блокирующий вызовы blur, при отправке формы
             this.removeChildrenListeners();
-            this.handleSubmit(target);
+            this.handleSubmit(formData);
           },
         },
       },
@@ -34,28 +40,36 @@ export default class PasswordEdit extends Block {
     super(propsAndChildren, customEvents);
   }
 
-  handleSubmit(target: any) {
-    const isValidated = validate(this, true);
+  componentDidMount() {
+    store.subscribe((state) => {
+      this.setProps({
+        isLoading: state.passwordEditPage.isLoading,
+      });
+    });
+  }
 
-    if (isValidated === true) {
-      const formData = {};
-      // @ts-ignore
-      Object.entries(target).forEach(([key, child]) => {
-        // @ts-ignore
-        if (child.nodeName === 'INPUT') {
-          // @ts-ignore
-          formData[child.name] = child.value;
-        }
+  handleSubmit(formData: IPasswordUpdateData) {
+    if (validate(this, true)) {
+      store.setState({
+        passwordEditPage: {
+          isLoading: true,
+        },
       });
 
-      console.log(formData);
+      accountController.updatePassword(formData).then(() => {
+        store.setState({
+          passwordEditPage: {
+            isLoading: false,
+          },
+        });
+      });
     }
   }
 
   render() {
     const password = new Input({
-      label: 'Password',
-      name: 'password',
+      label: 'Old password',
+      name: 'oldPassword',
       type: 'password',
       errors: this.props.errors,
       value: this.props.passwordValue,
@@ -75,8 +89,8 @@ export default class PasswordEdit extends Block {
     });
 
     const passwordConfirm = new Input({
-      label: 'Confirm password',
-      name: 'password_confirm',
+      label: 'New password',
+      name: 'newPassword',
       type: 'password',
       errors: this.props.errors,
       value: this.props.passwordConfirmValue,
@@ -95,10 +109,16 @@ export default class PasswordEdit extends Block {
       },
     });
 
+    const button = new Button({
+      text: 'Confirm',
+      type: 'submit',
+      className: 'btn btn-success btn-lg mw200',
+      isLoading: this.props.isLoading,
+    });
+
     this.children.password = password;
     this.children.passwordConfirm = passwordConfirm;
-
-    const ctx = this.children;
+    this.children.button = button;
 
     const temp = `
     <div class="main align-items-start pt-5">
@@ -106,7 +126,7 @@ export default class PasswordEdit extends Block {
                 <div class="container container-xs">
                     <div class="nav-header">
                         <div class="nav-header__item">
-                             <a class="btn btn-nav" href="/account.html">
+                             <a class="btn btn-nav router-link" href="/account">
                                 <img src="${BackIcon}" />
                              </a>
                         </div>
@@ -120,13 +140,13 @@ export default class PasswordEdit extends Block {
                             <% this.passwordConfirm %>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-success btn-lg mw200" >Confirm</button>
+                            <% this.button %>
                         </div>
 </form>
                 </div>
            </div>
       </div>
     `;
-    return this.compile(temp, ctx);
+    return this.compile(temp, this.props);
   }
 }

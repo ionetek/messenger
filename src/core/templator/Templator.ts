@@ -30,7 +30,7 @@ export default class Templator {
       let templateFunc: string = 'let templateFuncRows=[]; ';
 
       let rowStartPoint: number = 0;
-      let match: any;
+      let match: RegExpExecArray | null;
 
       const addRow = (row: string, isJavascript: boolean) => {
         if (isJavascript) {
@@ -41,7 +41,7 @@ export default class Templator {
           }
         } else if (row !== '') {
           if (row.replace(/"/g, '\\\\"').trim()) {
-            templateFunc += `templateFuncRows.push("${row.replace(/\r?\n/g, '').replace(/"/g, '\\"').trim()}");`;
+            templateFunc += `templateFuncRows.push("${row.replace(/\r?\n/g, '').replace(/"/g, '\\"')}");`;
           }
         } else {
           templateFunc += '';
