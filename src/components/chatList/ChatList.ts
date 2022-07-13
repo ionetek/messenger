@@ -35,9 +35,8 @@ export default class ChatList extends Block {
       this.setProps({
         chatList: state.chatList,
       });
-    });
+    }, 'chatList');
     chatController.getChats().then(() => {
-      console.log(`ПОИСК ИНФОРМАЦИИ ПО ТЕКУЩЕМУ ЧАТУ ${this.props.currentChatId}`);
       this._setChatInfo(this.props.currentChatId);
     });
   }
@@ -55,9 +54,7 @@ export default class ChatList extends Block {
 
   render() {
     this.children.newChatModal = new NewChatModal({});
-
     const temp = `<div><h1>Messages <a href="/account" class="btn router-link"><img src="${AccountIcon}" /></a></h1>
-            
             <div class="chat-list__header">
                     <div class="input-wrapper">
                         <input class="input-wrapper__form-control-gray" placeholder="Search">
@@ -71,7 +68,7 @@ export default class ChatList extends Block {
                 <% for (key in this.chatList) { %>
                     <a router-force="true" class="chat-list__item router-link <% if (this.currentChatId == this.chatList[key].id) { %> chat-list__item-active<% } %>" href="/messages/<% this.chatList[key].id %>">
                         <div class="chat-list__item-photo">
-                            <% if (this.chatList[key].avatar !== null) { %>
+                            <% if (this.chatList[key].avatar !== null && typeof this.chatList[key].avatar === 'string') { %>
                                 <img src="${config.RESOURCES_URL}<% this.chatList[key].avatar %>" />
                             <% } else { %>
                                 <img src="/images/avatar.svg" />
@@ -79,9 +76,11 @@ export default class ChatList extends Block {
                         </div>
                         <div class="chat-list__item-message">
                             <div class="chat-list__item-message-name"><% this.chatList[key].title %></div>
-                            <% if (this.chatList[key].last_message !== null) { %>
+                            <% if (this.chatList[key].last_message && this.chatList[key].last_message.user) { %>
                                 <div class="chat-list__item-message-text">
-                                    <% this.chatList[key].last_message.user.first_name %>: <% this.chatList[key].last_message.content %>
+                                    <% if (this.chatList[key].last_message && this.chatList[key].last_message.user) { %>
+                                        <% this.chatList[key].last_message.user.first_name %>: <% this.chatList[key].last_message.content %>
+                                    <% } %>
                                 </div>
                             <% } else { %>
                                 <div class="chat-list__item-message-text">No messages yet</div>

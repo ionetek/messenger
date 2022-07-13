@@ -16,6 +16,7 @@ class ChatController {
           router.go(`/messages/${response!.id}`, true);
           return response!.id;
         }
+        return false;
       })
       .catch((e) => {
         errorHandler(e);
@@ -23,7 +24,6 @@ class ChatController {
   }
 
   public getChats() {
-    console.log('ПОЛУЧАЕМ ЧАТЫ');
     return Client
       .get(`${config.API_URL}/chats`)
       .then((chatList: TObj) => {
@@ -37,13 +37,9 @@ class ChatController {
   }
 
   getToken(chatId: number) {
-    console.log(`ПОЛУЧАЕМ ТОКЕН ДЛЯ ЧАТА ${chatId}`);
     return Client
       .post(`${config.API_URL}/chats/token/${chatId}`)
-      .then((response: TObj) => {
-        console.log(`ТОКЕН ПОЛУЧЕН  : ${response!.token}`);
-        return response!.token;
-      })
+      .then((response: TObj) => response!.token)
       .catch((e) => {
         errorHandler(e);
       });

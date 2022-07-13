@@ -53,7 +53,7 @@ export default class Dialog extends Block {
         messages: state.messages,
         currentChat: state.currentChat,
       });
-    });
+    }, 'dialog');
   }
 
   handleSubmit(formData: IMessageData) {
@@ -71,9 +71,9 @@ export default class Dialog extends Block {
 
   public scrollDown() {
     const dialogBody = this.getContent()!.querySelector('.dialog__body');
-        dialogBody!.scrollTo({
-          top: dialogBody!.scrollHeight,
-        });
+    dialogBody!.scrollTo({
+      top: dialogBody!.scrollHeight,
+    });
   }
 
   render() {

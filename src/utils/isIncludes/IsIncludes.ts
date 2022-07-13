@@ -1,5 +1,5 @@
 type PlainObject<T = any> = {
-    [k in string]: T;
+  [k in string]: T
 };
 
 function isPlainObject(value: unknown): value is PlainObject {
@@ -17,11 +17,12 @@ function isArrayOrObject(value: unknown): value is [] | PlainObject {
   return isPlainObject(value) || isArray(value);
 }
 
-function isInclude(lhs: PlainObject, rhs: PlainObject) {
+function isIncludes(lhs: PlainObject, rhs: PlainObject) {
+  // lhs - объект, который проверяется на вхождение в rhs
   for (const [key, value] of Object.entries(lhs)) {
     const rightValue = rhs[key];
     if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-      if (isInclude(value, rightValue)) {
+      if (isIncludes(value, rightValue)) {
         continue;
       }
       return false;
@@ -35,4 +36,4 @@ function isInclude(lhs: PlainObject, rhs: PlainObject) {
   return true;
 }
 
-export default isInclude;
+export default isIncludes;

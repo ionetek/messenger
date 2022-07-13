@@ -47,7 +47,7 @@ export default class Account extends Block {
         phone: state.currentUser.phone,
         isLoading: state.currentUser.isLoading,
       });
-    });
+    }, 'account');
   }
 
   render() {

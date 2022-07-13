@@ -8,7 +8,7 @@ export default class MessagesList extends Block {
     const defaultValues = {
       currentChat: store.getState().currentChat,
       currentUserId: localStorage.getItem('userId'),
-      messages: [],
+      messages: store.getState().messages,
       isLoading: true,
     };
 
@@ -24,7 +24,7 @@ export default class MessagesList extends Block {
         currentChat: state.currentChat,
         messages: state.messages,
       });
-    });
+    }, 'messagesList');
   }
 
   render() {

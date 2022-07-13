@@ -1,4 +1,4 @@
-function deepClone(obj: TObj): TObj {
+function deepClone(obj: TObj): TObjNullable {
   if (obj === null) return null;
   const clone: any = { ...obj };
   Object.keys(clone).forEach(

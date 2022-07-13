@@ -45,7 +45,7 @@ export default class PasswordEdit extends Block {
       this.setProps({
         isLoading: state.passwordEditPage.isLoading,
       });
-    });
+    }, 'passwordEdit');
   }
 
   handleSubmit(formData: IPasswordUpdateData) {
