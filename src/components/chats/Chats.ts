@@ -51,7 +51,11 @@ export default class Chats extends Block {
                             <% } %>
                         </div>
                         <div class="chat-list__item-info">
-                            <div class="chat-list__item-message-date">04:20</div>
+                            <div class="chat-list__item-message-date">
+                                <% if (this.chatList[key].last_message) { %>
+                                    <% this.chatList[key].last_message.time %>
+                                <% } %>
+                            </div>
                             <div class="chat-list__item-message-new">
                                 <% if (this.chatList[key].unread_count > 0) { %>
                                     <div class="message-new-count"><% this.chatList[key].unread_count %></div>

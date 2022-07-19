@@ -9,6 +9,8 @@ import Input from '../input/Input';
 import SearchedMembers from '../searchedMembers/SearchedMembers';
 import BackIcon from './backIcon.svg';
 import chatController from '../../controllers/chat/ChatController';
+import ChatController from '../../controllers/chat/ChatController';
+import router from '../../router';
 
 export default class MembersModal extends Block {
   constructor(props: TProps) {
@@ -22,6 +24,7 @@ export default class MembersModal extends Block {
       isSearchOpen: false,
       title: '',
       users: store.getState().currentChat.users,
+      currentUserId: store.getState().currentUser.id,
     };
 
     const customEvents = [
@@ -47,6 +50,21 @@ export default class MembersModal extends Block {
         events: {
           click: () => {
             this.setProps({ isSearchOpen: true });
+          },
+        },
+      },
+      {
+        selector: '.btn-remove-member',
+        events: {
+          click: (e: Event) => {
+            const target = e.currentTarget as HTMLInputElement;
+            const userId = parseInt(target.getAttribute('user-id') as string);
+            const data = {
+              users: [userId],
+              chatId: store.getState().currentChat.id,
+            };
+            ChatController.removeMember(data);
+            router.go(`/messages/${store.getState().currentChat.id}`, true);
           },
         },
       },
@@ -138,7 +156,9 @@ export default class MembersModal extends Block {
                                          <span class="text-gray">@<% this.users[key].login %></span>
                                          </div>
                                          <div class="member-action">
-                                            <a class="btn"><img src="${RemoveIcon}" /> </a>
+                                            <% if (this.currentUserId !== this.users[key].id ) { %>
+                                                <a class="btn btn-remove-member" user-id="<% this.users[key].id %>"><img src="${RemoveIcon}" /> </a>
+                                            <% } %>
                                          </div>
                                     </li>
                                     <% } %>

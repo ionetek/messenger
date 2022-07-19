@@ -5,6 +5,7 @@ import { store } from '../../store';
 import { errorHandler } from '../../utils/errorHandler/ErrorHandler';
 import { showToast } from '../../utils/toast/Toast';
 import { getPeerData } from '../../utils/getPeerData/GetPeerData';
+import dateFormater from '../../utils/dateFormater/DateFormater';
 
 class ChatController {
   public newChat(data: INewChatData) {
@@ -31,9 +32,13 @@ class ChatController {
       .then((chatList: TObj[]) => {
 
         chatList.forEach((chat: TObj, key: number) => {
-          if (getPeerData(chat.last_message.content)) {
-            chatList[key].last_message.content = 'Video call';
+          if (chat.last_message !== null) {
+            if (getPeerData(chat.last_message.content)) {
+              chatList[key].last_message.content = 'Video call';
+            }
+            chatList[key].last_message.time = dateFormater(chatList[key].last_message.time);
           }
+
         });
 
 
@@ -63,6 +68,17 @@ class ChatController {
   public addMember(data: IAddMemeberData) {
     return Client
       .put(`${config.API_URL}/chats/users`, { data: JSON.stringify(data) })
+      .then(() => {
+        this.getChatUsers(data.chatId);
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
+  }
+
+  public removeMember(data: IAddMemeberData) {
+    return Client
+      .delete(`${config.API_URL}/chats/users`, { data: JSON.stringify(data) })
       .then(() => {
         this.getChatUsers(data.chatId);
       })
