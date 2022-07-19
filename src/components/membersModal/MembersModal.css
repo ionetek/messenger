@@ -1,0 +1,25 @@
+.members-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    &__item {
+        display: flex;
+        margin-bottom: 10px;
+        border-radius: 16px;
+        flex-direction: row;
+        gap: 20px;
+    }
+}
+
+.member-photo {
+    img{
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+}
+.member-info {
+    flex: 1 0 0%;
+}
+

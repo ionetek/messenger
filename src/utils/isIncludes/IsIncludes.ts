@@ -22,6 +22,7 @@ function isIncludes(lhs: PlainObject, rhs: PlainObject) {
   for (const [key, value] of Object.entries(lhs)) {
     const rightValue = rhs[key];
     if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
+      console.log('DEEP OBJ', key, value, rightValue);
       if (isIncludes(value, rightValue)) {
         continue;
       }

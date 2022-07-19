@@ -8,9 +8,10 @@ class Store {
 
   private _oldState: TState;
 
-  private _subscribers: TObj;
+  public _subscribers: TObj;
 
   private eventBus: () => EventBus;
+  
 
   static EVENTS = {
     INIT: '@@init',
@@ -23,7 +24,7 @@ class Store {
     const eventBus = new EventBus();
     this._state = this._makeStateProxy(initialState);
     this._oldState = { ...this._state };
-    this._subscribers = [];
+    this._subscribers = {};
     this.eventBus = () => eventBus;
 
     // Регистрируем события жизненного цикла
@@ -73,6 +74,7 @@ class Store {
   }
 
   public setState(newState: TState) {
+
     if (!newState) {
       return;
     }

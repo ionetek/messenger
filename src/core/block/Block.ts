@@ -2,9 +2,7 @@ import { v4 as uuid } from 'uuid';
 import EventBus from '../eventbus/EventBus';
 import Templator from '../templator/Templator';
 import router from '../../router';
-import merge from '../../utils/mergeDeep/MergeDeep';
-import isIncludes from '../../utils/isIncludes/IsIncludes';
-import deepClone from '../../utils/deepClone/deepClone';
+
 
 // Нельзя создавать экземпляр данного класса
 class Block {
@@ -38,7 +36,46 @@ class Block {
         }
       },
     },
-  }];
+  },
+  {
+    selector: '.dropdown',
+    events: {
+      click: (e: Event) => {
+        const target = e.target as HTMLElement;
+
+        if (e.currentTarget && (target.parentElement == e.currentTarget)) {
+          const element = e.currentTarget as HTMLElement;
+          element.querySelector('.dropdown-content')!.classList.add('dropdown-content-visible');
+
+        }
+      },
+    },
+  },
+  {
+    selector: '.sidebar, .content',
+    events: {
+      click: (e: Event) => {
+
+        const dropdownList = document.querySelectorAll('.dropdown') as NodeList;
+        const dropdownContentList = document.querySelectorAll('.dropdown-content') as NodeList;
+
+        let outside = true;
+        dropdownList.forEach(elem => {
+          if (e.composedPath().includes(elem)) {
+            outside = false;
+          }
+        });
+
+        dropdownContentList.forEach(elem => {
+          if (outside) {
+            const dropdownCont = elem as HTMLElement;
+            dropdownCont.classList!.remove('dropdown-content-visible');
+          }
+        });
+      },
+    },
+  },
+  ];
 
   protected eventBus: () => EventBus;
 
@@ -93,7 +130,7 @@ class Block {
     const { events = {} } = this.props;
 
     Object.keys(events).forEach((eventName) => {
-      if (eventName === 'blur' || eventName === 'focus') {
+      if (eventName === 'blur' || eventName === 'focus' || eventName === 'input') {
         if (this.element!.querySelector('input')) {
           this.element!.querySelector('input')!.addEventListener(eventName, events[eventName]);
         }
@@ -166,9 +203,8 @@ class Block {
     if (!nextProps) {
       return;
     }
-    if (!isIncludes(nextProps, deepClone(this.props) as TObj)) {
-      this.props = merge(this.props, nextProps) as TProps;
-    }
+    Object.assign(this.props, nextProps);
+
   };
 
   protected compile(template: string, props: TProps) {

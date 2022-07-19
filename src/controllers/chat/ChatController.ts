@@ -3,6 +3,7 @@ import config from '../../config';
 import router from '../../router';
 import { store } from '../../store';
 import { errorHandler } from '../../utils/errorHandler/ErrorHandler';
+import { showToast } from '../../utils/toast/Toast';
 
 class ChatController {
   public newChat(data: INewChatData) {
@@ -13,7 +14,7 @@ class ChatController {
       })
       .then((response: TObj) => {
         if (response!.id) {
-          router.go(`/messages/${response!.id}`, true);
+          router.go(`/messages/${response!.id}/welcome`, true);
           return response!.id;
         }
         return false;
@@ -23,9 +24,9 @@ class ChatController {
       });
   }
 
-  public getChats() {
+  public getChats(title = '') {
     return Client
-      .get(`${config.API_URL}/chats`)
+      .get(`${config.API_URL}/chats?title=${title}`)
       .then((chatList: TObj) => {
         store.setState({
           chatList,
@@ -34,6 +35,109 @@ class ChatController {
       .catch((e) => {
         errorHandler(e);
       });
+  }
+
+  public searchMembers(data: ISearchMembers) {
+
+    return Client
+      .post(`${config.API_URL}/user/search`, { data: JSON.stringify(data) })
+      .then((searchedMembers: TObj) => {
+        store.setState({
+          searchedMembers,
+        });
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
+  }
+
+  public addMember(data: IAddMemeberData) {
+    return Client
+      .put(`${config.API_URL}/chats/users`, { data: JSON.stringify(data) })
+      .then(() => {
+        this.getChatUsers(data.chatId);
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
+  }
+
+  public getCurrentChat(chatId: number) {
+
+    const chats = store.getState().chatList;
+    chats.forEach((item: TChatInfo) => {
+      if (item.id == chatId) {
+        store.setState({
+          currentChat: item,
+        });
+      }
+    });
+
+    //Получение информации о пользователях чата
+    if (chatId !== null) {
+      this.getChatUsers(chatId);
+    }
+  }
+
+  public getChatUsers(chatId: number) {
+    return Client
+      .get(`${config.API_URL}/chats/${chatId}/users`)
+      .then((response: TObj) => {
+        store.setState({
+          currentChat: {
+            users: response,
+          },
+        });
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
+  }
+
+  public removeChat(chatId: number) {
+    return Client
+      .delete(`${config.API_URL}/chats`, {
+        data: JSON.stringify({ chatId }),
+
+      })
+      .then(() => {
+        store.setState({
+          currentChat: { id: null },
+        });
+        router.go('/messages', true);
+
+      })
+      .catch((e) => {
+        errorHandler(e);
+      });
+  }
+
+  public updateAvatar(data: FormData) {
+    return Client
+      .put(`${config.API_URL}/chats/avatar`, {
+        data,
+
+      })
+      .then((chat: TObj) => {
+        showToast('Avatar updated', 'success');
+        store.setState({
+          currentChat: chat,
+        });
+        this.getChats();
+      })
+      .catch(errorHandler);
+  }
+
+  public uploadPhoto(data: FormData) {
+    return Client
+      .post(`${config.API_URL}/resources`, {
+        data,
+
+      })
+      .then((response: TObj) => {
+        return response;
+      })
+      .catch(errorHandler);
   }
 
   getToken(chatId: number) {

@@ -3,6 +3,7 @@ import config from '../../config';
 import { store } from '../../store';
 import { ABNORMAL_CLOSURE } from '../../utils/wsEventCodes/WsEventCodes';
 import { errorHandler } from '../../utils/errorHandler/ErrorHandler';
+import ChatController from '../chat/ChatController';
 
 class MessageController {
   private _ws: WebSocket;
@@ -44,6 +45,7 @@ class MessageController {
   }
 
   private _onMessage(response: MessageEvent) {
+
     const data = JSON.parse(response.data);
 
     if (Array.isArray(data)) {
@@ -54,10 +56,39 @@ class MessageController {
           messages: data.reverse(),
         });
       }
-    } else if (typeof data === 'object' && data.type === 'message') {
-      const messages = [...store.getState().messages, data];
-      store.setState({ messages });
+    } else if (typeof data === 'object' && (data.type === 'message' || data.type === 'file')) {
+
+      let content;
+
+      try {
+        content = JSON.parse(`${data.content}`);
+      } catch {
+
+      }
+
+
+      if (content && content.type === 'videoCall') {
+
+        if (content.peerId) {
+          //Если пришло сообщение с peerId и автор не мы, то предлагаем снять трубку
+          if (store.getState().currentUser.id !== data.user_id) {
+            store.setState({
+              videoCall: content.peerId,
+            });
+          }
+        } else {
+          //Если пришел пустой peerId, то кладем трубку
+          store.setState({
+            videoCall: null,
+          });
+        }
+      } else {
+        const messages = [...store.getState().messages, data];
+        store.setState({ messages });
+        ChatController.getChats();
+      }
     }
+
   }
 
   private _onError(event: ErrorEvent) {
@@ -114,6 +145,12 @@ class MessageController {
       this._ws.send(JSON.stringify({
         content: data.message,
         type: 'message',
+      }));
+    }
+    if (data.resource) {
+      this._ws.send(JSON.stringify({
+        content: data.resource,
+        type: 'file',
       }));
     }
   }

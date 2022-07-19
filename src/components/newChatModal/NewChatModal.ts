@@ -1,6 +1,5 @@
 import Block from '../../core/block/Block';
 import Input from '../input/Input';
-import './NewChatModal.css';
 import validate from '../../utils/validate/Validate';
 import CloseIcon from './closeIcon.svg';
 import Button from '../button/Button';

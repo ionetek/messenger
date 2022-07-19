@@ -1,6 +1,6 @@
 import router from '../../router';
 import Block from '../../core/block/Block';
-import ChatList from '../../components/chatList/ChatList';
+import Sidebar from '../../components/sidebar/Sidebar';
 import { store } from '../../store';
 import chatController from '../../controllers/chat/ChatController';
 import messageController from '../../controllers/message/MessageController';
@@ -46,12 +46,12 @@ export default class Messages extends Block {
 
   render() {
     // CHILDREN LIST
-    this.children.chatlist = new ChatList({ currentChatId: this.props.currentChatId });
+    this.children.sidebar = new Sidebar({ currentChatId: this.props.currentChatId });
     this.children.dialog = new Dialog({ currentChatId: this.props.currentChatId });
     const temp = `
         <div class="main">
             <div class="sidebar">
-            <% this.chatlist %>
+            <% this.sidebar %>
             </div>
             <div class="content">
                 <div class="panel">
@@ -70,8 +70,12 @@ export default class Messages extends Block {
       messageController.closeConnection();
     }
 
-    store.setState({
-      messages: [],
-    });
+    /*store.setState({
+          messages: [],
+          currentChat: {
+            id: null,
+            users: [],
+          },
+        });*/
   }
 }

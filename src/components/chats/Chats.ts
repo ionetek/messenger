@@ -1,33 +1,17 @@
 import Block from '../../core/block/Block';
-import './ChatList.css';
-import AccountIcon from './account.svg';
-import NewChatIcon from './newChat.svg';
-import NewChatModal from '../newChatModal/NewChatModal';
 import { store } from '../../store';
-import chatController from '../../controllers/chat/ChatController';
 import config from '../../config';
 
-export default class ChatList extends Block {
+export default class Chats extends Block {
   constructor(props: TProps = {}) {
     const defaultValues = {
       chatList: store.getState().chatList,
+      title: props.title || '',
     };
-
-    const customEvents = [
-      {
-        selector: '#create-new-chat',
-        events: {
-          click: () => {
-            this.children.newChatModal.setProps({ isOpened: true });
-          },
-        },
-      },
-    ];
-
     // Объединяем текущие пропсы компонента и его детей
     const propsAndChildren = { ...props, ...defaultValues };
 
-    super(propsAndChildren, customEvents);
+    super(propsAndChildren);
   }
 
   componentDidMount() {
@@ -35,36 +19,16 @@ export default class ChatList extends Block {
       this.setProps({
         chatList: state.chatList,
       });
+
     }, 'chatList');
-    chatController.getChats().then(() => {
-      this._setChatInfo(this.props.currentChatId);
-    });
+
   }
 
-  private _setChatInfo(chatId: number) {
-    const chats = store.getState().chatList;
-    chats.forEach((item: TChatInfo) => {
-      if (item.id == chatId) {
-        store.setState({
-          currentChat: item,
-        });
-      }
-    });
-  }
 
   render() {
-    this.children.newChatModal = new NewChatModal({});
-    const temp = `<div><h1>Messages <a href="/account" class="btn router-link"><img src="${AccountIcon}" /></a></h1>
-            <div class="chat-list__header">
-                    <div class="input-wrapper">
-                        <input class="input-wrapper__form-control-gray" placeholder="Search">
-                    </div>
-                    <a class="btn" id="create-new-chat"><img src="${NewChatIcon}" title="New chat" /></a>
-                </div>
-            <div class="chat-list">
-                
-                <% this.newChatModal %>
-                <% if(this.chatList) {  %>
+    const temp = `<div>
+
+<% if(this.chatList) {  %>
                 <% for (key in this.chatList) { %>
                     <a router-force="true" class="chat-list__item router-link <% if (this.currentChatId == this.chatList[key].id) { %> chat-list__item-active<% } %>" href="/messages/<% this.chatList[key].id %>">
                         <div class="chat-list__item-photo">
@@ -98,9 +62,8 @@ export default class ChatList extends Block {
                     </a>
                 <% } %>
             <% } %>
-            
-            </div>
 </div>`;
     return this.compile(temp, this.props);
+
   }
 }

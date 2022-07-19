@@ -28,7 +28,9 @@
 
   &-photo img {
     width: 68px;
+    height: 68px;
     border-radius: 8px;
+    object-fit: cover;
   }
 
   &-message {

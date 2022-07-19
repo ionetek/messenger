@@ -51,6 +51,17 @@ declare interface IQueryOptions {
 }
 
 // eslint-disable-next-line no-unused-vars
+declare interface ISearchMembers {
+  login?: string
+}
+
+// eslint-disable-next-line no-unused-vars
+declare interface IAddMemeberData {
+  users: number[],
+  chatId: number
+}
+
+// eslint-disable-next-line no-unused-vars
 declare interface IUserInfoData {
   first_name?: string,
   second_name?: string,
@@ -89,7 +100,8 @@ declare interface INewChatData {
 
 // eslint-disable-next-line no-unused-vars
 declare interface IMessageData {
-  message?: string
+  message?: string,
+  resource?: string
 }
 
 // eslint-disable-next-line no-unused-vars

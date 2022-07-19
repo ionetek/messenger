@@ -25,6 +25,7 @@ router
   .use('/registration', Registration, 'public')
   .use('/messages', Messages, 'protected')
   .use('/messages/:id', Messages, 'protected')
+  .use('/messages/:id/:welcome', Messages, 'protected')
   .use('/account', Account, 'protected')
   .use('/account-edit', AccountEdit, 'protected')
   .use('/password-edit', PasswordEdit, 'protected')
