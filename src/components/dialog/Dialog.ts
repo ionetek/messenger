@@ -242,6 +242,8 @@ export default class Dialog extends Block {
       type: 'text',
       errors: this.props.errors,
       value: this.props.messageValue,
+      className: 'bg-gray',
+      placeholder: 'Your message',
       events: {
         blur: (e: any) => {
           this.setProps({ messageValue: e.target.value });

@@ -126,3 +126,6 @@
         cursor: pointer;
     }
 }
+.bg-gray {
+    background: #edeff1!important;
+}

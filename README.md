@@ -4,19 +4,19 @@ Messenger for Yandex.Practicum
 A messenger for Yandex Practicum using its own template engine.
 
 Ссылка на Pull
-Request: [https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/6](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/6)
+Request: [https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/7](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/7)
 
-![img.png](https://oviland.ru/storage/messenger.png)
+![img.png](https://oviland.ru/storage/ya-messenger.png)
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
-👉 [Demo](https://statuesque-kringle-291216.netlify.app/)
+👉 [Demo on Heroku](https://yandex-msngr.herokuapp.com/)
 ---
 Setup
 -----
 Clone the repo:
 
-    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_3
+    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_4
 
 Move to the project path:
 
@@ -39,9 +39,9 @@ Test:
 Demo:
 -----
 
-* [Login](https://statuesque-kringle-291216.netlify.app/)
-* [404 Error](https://statuesque-kringle-291216.netlify.app/404.html)
-* [500 Error](https://statuesque-kringle-291216.netlify.app/500.html)
+* [Login](https://yandex-msngr.herokuapp.com/)
+* [404 Error](https://yandex-msngr.herokuapp.com/404)
+* [500 Error](https://yandex-msngr.herokuapp.com/500)
 
 History
 -----
@@ -79,6 +79,22 @@ History
 ✅ WebSocket is enabled for chat messages
 
 ✅ Tests have been written for the template engine, router, component, request sending module(Mocha, Chai)
+
+### Sprint 4
+
+✅ Switching from Parcel to Webpack
+
+✅ Dockerfile created
+
+✅ Adding and removing users in chats
+
+✅ Uploading an avatar for a chat
+
+✅ Live Chat search
+
+✅ **P2P video calls using WebRTC**
+
+✅ Sending photos to the chat
 
 Template example
 ----------------
