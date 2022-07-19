@@ -1,31 +1,36 @@
+import { store } from '../../store';
 import Block from '../../core/block/Block';
 import Input from '../../components/input/Input';
 import validate from '../../utils/validate/Validate';
+import AuthController from '../../controllers/auth/AuthController';
+import Button from '../../components/button/Button';
+import { getFormData } from '../../utils/getFormData/GetFormData';
 
 export default class Login extends Block {
   constructor(props: TProps) {
-    // CHILDREN
-
+    document.title = 'Login';
     const errors: any = [];
     const defaultValues = {
-      emailValue: '',
+      loginValue: '',
       passwordValue: '',
-      firstnameValue: '',
+      isLoading: store.getState().loginPage.isLoading,
     };
 
     const customEvents = [
       {
         selector: '#loginForm',
         events: {
-          submit: (e: any) => {
+          submit: (e: Event) => {
             e.preventDefault();
-            const target = { ...e.target };
+            const target = e.target as HTMLFormElement;
+            const formData = getFormData([...target]);
             // Костыльный метод, блокирующий вызовы blur, при отправке формы
             this.removeChildrenListeners();
-            this.handleSubmit(target);
+            this.handleSubmit(formData);
           },
         },
       },
+
     ];
 
     // Объединяем текущие пропсы компонента и его детей
@@ -34,42 +39,48 @@ export default class Login extends Block {
     super(propsAndChildren, customEvents);
   }
 
-  handleSubmit(target: any) {
-    const isValidated = validate(this, true);
-
-    if (isValidated === true) {
-      const formData = {};
-      // @ts-ignore
-      Object.entries(target).forEach(([key, child]) => {
-        // @ts-ignore
-        if (child.nodeName === 'INPUT') {
-          // @ts-ignore
-          formData[child.name] = child.value;
-        }
+  componentDidMount() {
+    store.subscribe((state) => {
+      this.setProps({
+        isLoading: state.loginPage.isLoading,
       });
+    });
+  }
 
-      console.log(formData);
+  handleSubmit(formData: ILoginData) {
+    if (validate(this, true)) {
+      store.setState({
+        loginPage: {
+          isLoading: true,
+        },
+      });
+      AuthController.signIn(formData).then(() => {
+        store.setState({
+          loginPage: {
+            isLoading: false,
+          },
+        });
+      });
     }
   }
 
   render() {
-    const email = new Input({
-      label: 'Email',
-      name: 'email',
+    const login = new Input({
+      label: 'Login',
+      name: 'login',
       type: 'text',
       errors: this.props.errors,
-      value: this.props.emailValue,
+      value: this.props.loginValue,
       events: {
         blur: (e: any) => {
-          this.setProps({ emailValue: e.target.value });
+          this.setProps({ loginValue: e.target.value });
           validate(this);
         },
-        focus: () => validate(this),
       },
       required: {
-        text: 'Invalid email',
+        text: 'Only letters, numbers and _',
         rules: {
-          pattern: '[\\w.-]+@([A-Za-z0-9-]+\\.)+[A-Za-z0-9]+',
+          pattern: '^(?=.*[A-Za-z])[A-Za-z0-9_\\-]{3,20}$',
         },
       },
     });
@@ -95,8 +106,16 @@ export default class Login extends Block {
       },
     });
 
-    this.children.email = email;
+    const button = new Button({
+      text: 'Login',
+      type: 'submit',
+      className: 'btn btn-success btn-lg mw200',
+      isLoading: this.props.isLoading,
+    });
+
+    this.children.login = login;
     this.children.password = password;
+    this.children.button = button;
 
     const ctx = this.children;
     const temp = `<div class="main">
@@ -105,16 +124,16 @@ export default class Login extends Block {
                     <h1 class="text-center">Login</h1>
                     <form id="loginForm">
                         <div class="row">
-                            <% this.email %>
+                            <% this.login %>
                         </div>
                         <div class="row">
                             <% this.password %>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-success btn-lg mw200">Login</button>
+                            <% this.button %>
                         </div>
                         <div class="row justify-content-center">
-                            <a href="/registration.html" class="text-gray">Create an account</a>
+                            <a class="text-gray router-link" href="/registration">Create an account</a>
                         </div>
                     </form>
                 </div>

@@ -1,13 +1,18 @@
-const METHODS = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE',
+// eslint-disable-next-line no-shadow
+enum METHODS {
+    GET = 'GET',
+    POST = 'POST',
+    PUT = 'PUT',
+    PATCH = 'PATCH',
+    DELETE = 'DELETE',
+}
+
+const defaultHeaders = {
+  'Content-type': 'application/json; charset=UTF-8',
 };
 
-// Самая простая версия. Реализовать штучку со всеми проверками им предстоит в конце спринта
 // Необязательный метод
-function queryStringify(data: TObj) {
+function queryStringify(data = {} as TQueryData) {
   if (typeof data !== 'object') {
     throw new Error('Data must be object');
   }
@@ -18,19 +23,23 @@ function queryStringify(data: TObj) {
 }
 
 class Client {
-    get = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.GET }, options.timeout);
+    get = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.GET }, options!.timeout);
 
-    post = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+    post = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.POST }, options!.timeout);
 
-    put = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+    put = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.PUT }, options!.timeout);
 
     delete = (url: string, options: TObj = {}) => this.request(url, {
       ...options,
       method: METHODS.DELETE,
-    }, options.timeout);
+    }, options!.timeout);
 
-    request = (url: string, options: TObj = {}, timeout = 5000) => {
-      const { headers = {}, method, data } = options;
+    request = (url: string, options: IQueryOptions, timeout = 10000) => {
+      let { headers = {}, method, data } = options;
+
+      if (Object.keys(headers).length == 0 && !(data instanceof FormData)) {
+        headers = defaultHeaders;
+      }
 
       return new Promise((resolve, reject) => {
         if (!method) {
@@ -38,8 +47,10 @@ class Client {
           return;
         }
 
-        const xhr = new XMLHttpRequest();
+        const xhr = new window.XMLHttpRequest();
         const isGet = method === METHODS.GET;
+
+        xhr.withCredentials = true;
 
         xhr.open(
           method,
@@ -53,6 +64,20 @@ class Client {
         });
 
         xhr.onload = function () {
+          let resp: any = '';
+
+          if (xhr.response === 'OK') {
+            resp = { status: 'OK' };
+          } else {
+            resp = JSON.parse(xhr.response);
+          }
+
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve(resp);
+          } else {
+            reject(resp);
+          }
+
           resolve(xhr);
         };
 
@@ -70,3 +95,5 @@ class Client {
       });
     };
 }
+
+export default new Client();
