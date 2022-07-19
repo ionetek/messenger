@@ -141,8 +141,8 @@ export default class VideoCall extends Block {
     const temp = `<div class="video-call-wrapper ${isOpenedClass} video-call-incoming">
                        
                        <div class="video-call <% if (this.videoCall !== 'outgoing') { %>video-call-waiting<% } %>">
-                           <video id="myVideo" muted="muted" playsInline></video>
-                           <video id="remoteVideo" muted="muted" playsInline class="d-none"></video>
+                           <video id="myVideo"  playsInline></video>
+                           <video id="remoteVideo"  playsInline class="d-none"></video>
                            <a class="btn btn-extra-lg btn-danger btn-end-call" id="btnEndCall">
                                 <img src="${EndCallIcon}" />
                            </a>
