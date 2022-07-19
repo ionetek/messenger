@@ -32,7 +32,7 @@ export default class Dialog extends Block {
       currentUserId: localStorage.getItem('userId'),
       currentChat: store.getState().currentChat,
       isLoading: true,
-      videoCall: null,
+      videoCall: store.getState().videoCall,
     };
 
     const customEvents = [
@@ -121,7 +121,7 @@ export default class Dialog extends Block {
         events: {
           click: () => {
             store.setState({
-              videoCall: 'outgoing',
+              videoCall: { peerId: 'outgoing', userId: null },
             });
 
           },
@@ -146,11 +146,31 @@ export default class Dialog extends Block {
       }
       if (!isOpenedModal) {
 
+        // ВЫКЛЮЧАЕМ ВЕБКАМЕРУ ЕСЛИ ВИДЕО_ВЫЗОВА НЕТ
+        if (!state.videoCall.peerId) {
+          const videoCallModal = this.children.videoCallModal as VideoCall;
+          if (videoCallModal) {
+            //Выключаем звонок
+            if (videoCallModal.melody) {
+              videoCallModal.melody.pause();
+            }
+            const streams = videoCallModal.element.querySelector('#myVideo') as HTMLVideoElement;
+            const streamsSrc = (<MediaStream>streams.srcObject);
+
+
+            if (streamsSrc) {
+              const tracks = streamsSrc.getTracks();
+              tracks.forEach(stream => stream.stop());
+            }
+
+          }
+        }
+
         this.setProps({
           videoCall: state.videoCall,
         });
 
-        if (!state.videoCall) {
+        if (!state.videoCall.peerId) {
           this.setProps({
             messages: state.messages,
             currentChat: state.currentChat,
@@ -168,8 +188,8 @@ export default class Dialog extends Block {
       this.scrollDown();
       //Предлагаем добавить пользователей, если чат новый
       const { welcome = false } = router.getParams();
-      let isNewChat = welcome ? true : false;
-      if (isNewChat) {
+
+      if (welcome) {
         this.children.membersModal.setProps({
           isSearchOpen: true,
           isOpened: true,
@@ -206,7 +226,6 @@ export default class Dialog extends Block {
   endVideoCall() {
     let message = '{"type" : "videoCall", "peerId" : ""}';
     messageController.sendMessage({ message });
-    //this.setProps({ videoCall: null });
   }
 
 
@@ -244,12 +263,11 @@ export default class Dialog extends Block {
       value: this.props.messageFileId,
     });
     this.children.membersModal = new MembersModal({ currentChatId: this.props.currentChatId });
-
-    if (this.props.videoCall) {
+    if (this.props.videoCall.peerId) {
       this.children.videoCallModal = new VideoCall({
         sendVideoCallRequest: this.sendVideoCallRequest,
         endVideoCall: this.endVideoCall.bind(this),
-        videoCall: this.props.videoCall,
+        peerId: this.props.videoCall.peerId,
       });
 
     }
@@ -260,7 +278,7 @@ export default class Dialog extends Block {
 
     const temp = `<div class="dialog">
             <% this.membersModal %>
-            <% if (this.videoCall) { %>
+            <% if (this.videoCall.peerId) { %>
                 <% this.videoCallModal %>
             <% } %>
             <% if (this.currentChat.id) { %>

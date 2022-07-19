@@ -2,6 +2,7 @@ import Block from '../../core/block/Block';
 import './MembersModal.css';
 import CloseIcon from './closeIcon.svg';
 import AddIcon from './addIcon.svg';
+import RemoveIcon from './removeIconGray.svg';
 import { store } from '../../store';
 import config from '../../config';
 import Input from '../input/Input';
@@ -136,7 +137,9 @@ export default class MembersModal extends Block {
                                             </h4>
                                          <span class="text-gray">@<% this.users[key].login %></span>
                                          </div>
-                                         <div class="member-action"></div>
+                                         <div class="member-action">
+                                            <a class="btn"><img src="${RemoveIcon}" /> </a>
+                                         </div>
                                     </li>
                                     <% } %>
                                 </ul>

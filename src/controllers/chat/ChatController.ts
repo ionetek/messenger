@@ -4,6 +4,7 @@ import router from '../../router';
 import { store } from '../../store';
 import { errorHandler } from '../../utils/errorHandler/ErrorHandler';
 import { showToast } from '../../utils/toast/Toast';
+import { getPeerData } from '../../utils/getPeerData/GetPeerData';
 
 class ChatController {
   public newChat(data: INewChatData) {
@@ -27,7 +28,15 @@ class ChatController {
   public getChats(title = '') {
     return Client
       .get(`${config.API_URL}/chats?title=${title}`)
-      .then((chatList: TObj) => {
+      .then((chatList: TObj[]) => {
+
+        chatList.forEach((chat: TObj, key: number) => {
+          if (getPeerData(chat.last_message.content)) {
+            chatList[key].last_message.content = 'Video call';
+          }
+        });
+
+
         store.setState({
           chatList,
         });

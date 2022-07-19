@@ -1,3 +1,4 @@
+import config from '../../config';
 import Block from '../../core/block/Block';
 import './VideoCall.css';
 import EndCallIcon from './endCallIcon.svg';
@@ -6,6 +7,7 @@ import AnswerCallIcon from './answerCallIcon.svg';
 //ДОПОЛНИТЕЛЬНАЯ БИБЛИОТЕКА, ДЛЯ ДОБАВЛЕНИЯ ВОЗМОЖНОСТИ ВИДЕО ЗВОНКОВ
 //НАСТАВНИКИ РАЗРЕШИЛИ ИСПОЛЬЗОВАТЬ
 import Peer, { MediaConnection } from 'peerjs';
+import { store } from '../../store';
 
 export default class VideoCall extends Block {
   peer: Peer;
@@ -16,18 +18,24 @@ export default class VideoCall extends Block {
 
   mediaStream: any;
 
+  melody: HTMLAudioElement;
+
   constructor(props: TProps = {}) {
 
     const defaultValues = {
       isOpened: true,
+      user: store.getState().videoCall.user,
     };
 
     const customEvents = [
       {
-        selector: '#btnEndCall',
+        selector: '#btnEndCall , #btnDecline',
         events: {
           click: () => {
             this.props.endVideoCall();
+            if (this.melody) {
+              this.melody.pause();
+            }
           },
         },
       },
@@ -35,8 +43,10 @@ export default class VideoCall extends Block {
         selector: '#btnAnswer',
         events: {
           click: () => {
-            //this.answerVideoCall(this.props.videoCall);
-            this.call(this.props.videoCall);
+            if (this.melody) {
+              this.melody.pause();
+            }
+            this.call(this.props.peerId);
           },
         },
       },
@@ -47,7 +57,15 @@ export default class VideoCall extends Block {
 
     super(propsAndChildren, customEvents);
 
-    this.isIncomingCall = this.props.videoCall !== 'outgoing';
+    this.isIncomingCall = this.props.peerId !== 'outgoing';
+
+    this.melody = new Audio('https://oviland.ru/storage/melody.mp3');
+    if (this.isIncomingCall) {
+      this.melody.loop = true;
+      this.melody.play();
+
+    }
+
 
   }
 
@@ -62,7 +80,7 @@ export default class VideoCall extends Block {
       self.peerId = peerID;
 
       //ЕСЛИ ИСХОДЯЩИЙ ЗВОНОК
-      if (self.props.videoCall === 'outgoing') {
+      if (!this.isIncomingCall) {
         self.sendVideoCallRequest(peerID);
         self.startMyStream();
       }
@@ -85,6 +103,7 @@ export default class VideoCall extends Block {
   }
 
   protected call(peerID: string) {
+
     let self = this;
     this.startMyStream().then(stream => {
       let call = self.peer.call(peerID, stream);
@@ -96,7 +115,6 @@ export default class VideoCall extends Block {
         remoteVideoElement.classList.remove('d-none');
         remoteVideoElement.onloadedmetadata = () => {
           remoteVideoElement.play();
-          console.log('PLAY', remoteStream.getAudioTracks());
         };
 
       });
@@ -148,29 +166,43 @@ export default class VideoCall extends Block {
   }
 
   render() {
+
     let isOpenedClass = this.props.isOpened ? 'modal-opened' : '';
+
+    console.log('USER:', this.props.user);
 
     const temp = `<div class="video-call-wrapper ${isOpenedClass} video-call-incoming">
                        
-                       <div class="video-call <% if (this.videoCall !== 'outgoing') { %>video-call-waiting<% } %>">
+                       <div class="video-call <% if (this.peerId !== 'outgoing') { %>video-call-waiting<% } %>">
                            <video id="myVideo" muted="muted" playsInline></video>
                            <video id="remoteVideo"  playsInline class="d-none"></video>
                            <a class="btn btn-extra-lg btn-danger btn-end-call" id="btnEndCall">
                                 <img src="${EndCallIcon}" />
                            </a>
                        </div>
-                       <% if (this.videoCall !== 'outgoing') { %>
-                       <div class="modal">
+                       <% if (this.peerId !== 'outgoing') { %>
+                       <div class="modal bg-transparent">
                             <div class="modal__header">
-                                <h2 class="m-0 text-center">Incoming video call</h2>
+                            <h2 class="m-0 text-center text-white"><% this.user.first_name %>&nbsp;<% this.user.second_name %></h2>
+                            <p class="m-0 text-center text-white inccoming-call-text">Incoming video call</p>
                             </div>
                             <div class="modal__body">
-                                <a class="btn btn-extra-lg btn-danger" id="btnDecline">
-                                    <img src="${EndCallIcon}" />
-                                </a>
-                                <a class="btn btn-extra-lg btn-success" id="btnAnswer">
-                                    <img src="${AnswerCallIcon}" />
-                                </a>
+                                
+                                <% if (this.user.avatar !== null) { %>
+                                    <img src="${config.RESOURCES_URL}<% this.user.avatar %>" class="caller-photo mb-4" />
+                                <% } else { %>
+                                    <img src="/images/avatar.svg" class="caller-photo mb-4" />
+                                <% } %>
+                                
+                                <div class="call-actions">
+                                    <a class="btn btn-extra-lg btn-danger" id="btnDecline">
+                                        <img src="${EndCallIcon}" />
+                                    </a>
+                                    <a class="btn btn-extra-lg btn-success" id="btnAnswer">
+                                        <img src="${AnswerCallIcon}" class="shaked-icon" />
+                                    </a>
+                                </div>
+                                
                             </div>
                        </div>
                        <% } %>

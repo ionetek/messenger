@@ -54,10 +54,49 @@
 .video-call-waiting {
     display: none;
 }
-.video-call-incoming .modal__body {
+.video-call-incoming .call-actions {
     flex-direction: row;
     gap: 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.caller-photo {
+    width: 240px;
+    height: 240px;
+    border-radius: 16px;
+    object-fit: cover;
+}
+.bg-transparent {
+    background: none!important;
+}
+.inccoming-call-text:after {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
+  animation: ellipsis steps(4,end) 900ms infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+}
+.shaked-icon {
+  animation: shake 0.5s;
+  /* Когда анимация будет закончена, начните снова */
+  animation-iteration-count: infinite;
+}
+@keyframes ellipsis {
+  to {
+    width: 20px;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 20px;
+  }
+}
+@keyframes shake {
+  0% { transform:   rotate(-5deg); }
+  50% { transform:   rotate(5deg); }
+  100% { transform: rotate(-5deg); }
 }

@@ -37,5 +37,8 @@ export const store = new Store({
     isOpened: false,
     isLoading: false,
   },
-  videoCall: null,
+  videoCall: {
+    peerId: null,
+    user: {},
+  },
 });

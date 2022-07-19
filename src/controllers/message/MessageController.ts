@@ -4,6 +4,8 @@ import { store } from '../../store';
 import { ABNORMAL_CLOSURE } from '../../utils/wsEventCodes/WsEventCodes';
 import { errorHandler } from '../../utils/errorHandler/ErrorHandler';
 import ChatController from '../chat/ChatController';
+import { getPeerData } from '../../utils/getPeerData/GetPeerData';
+import UserController from '../user/UserController';
 
 class MessageController {
   private _ws: WebSocket;
@@ -46,40 +48,37 @@ class MessageController {
 
   private _onMessage(response: MessageEvent) {
 
-    const data = JSON.parse(response.data);
+    let data = JSON.parse(response.data);
+
 
     if (Array.isArray(data)) {
       if (!data.length) {
         store.setState({ messages: [] });
       } else {
+        data = data.filter((message: TObj) => !getPeerData(message.content));
         store.setState({
           messages: data.reverse(),
         });
       }
     } else if (typeof data === 'object' && (data.type === 'message' || data.type === 'file')) {
 
-      let content;
+      let result = getPeerData(data.content);
 
-      try {
-        content = JSON.parse(`${data.content}`);
-      } catch {
-
-      }
-
-
-      if (content && content.type === 'videoCall') {
-
-        if (content.peerId) {
-          //Если пришло сообщение с peerId и автор не мы, то предлагаем снять трубку
+      if (result) {
+        let peerData = result as TObj;
+        if (peerData.id) {
           if (store.getState().currentUser.id !== data.user_id) {
-            store.setState({
-              videoCall: content.peerId,
+            UserController.getUser(data.user_id).then(user => {
+
+              store.setState({
+                videoCall: { user, peerId: peerData.id },
+              });
             });
           }
         } else {
-          //Если пришел пустой peerId, то кладем трубку
+          //Звонок завершен
           store.setState({
-            videoCall: null,
+            videoCall: { peerId: null, user: {} },
           });
         }
       } else {
