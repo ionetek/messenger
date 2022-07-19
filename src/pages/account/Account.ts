@@ -35,9 +35,11 @@ export default class Account extends Block {
         selector: '#back',
         events: {
           click: () => {
-            console.log('BACk');
             store.setState({
-              currentChat: {},
+              currentChat: {
+                id: null,
+                users: [],
+              },
             });
             router.go('/messages');
           },
