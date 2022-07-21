@@ -29,7 +29,7 @@ export default class VideoCall extends Block {
 
     const customEvents = [
       {
-        selector: '#btnEndCall , #btnDecline',
+        selector: '#btn-end-call , #btn-decline',
         events: {
           click: () => {
             this.props.endVideoCall();
@@ -40,7 +40,7 @@ export default class VideoCall extends Block {
         },
       },
       {
-        selector: '#btnAnswer',
+        selector: '#btn-answer',
         events: {
           click: () => {
             if (this.melody) {
@@ -110,7 +110,7 @@ export default class VideoCall extends Block {
       self.connected();
       call.on('stream', (remoteStream) => {
         //ПОКАЗЫВАЕМ СТРИМ СОБЕСЕДНИКА
-        const remoteVideoElement = self.element.querySelector('#remoteVideo') as HTMLVideoElement;
+        const remoteVideoElement = self.element.querySelector('#remote-video') as HTMLVideoElement;
         remoteVideoElement.srcObject = remoteStream;
         remoteVideoElement.classList.remove('d-none');
         remoteVideoElement.onloadedmetadata = () => {
@@ -126,7 +126,7 @@ export default class VideoCall extends Block {
     call.answer(this.mediaStream); // Answer the call with an A/V stream.
     call.on('stream', (remoteStream: any) => {
       //ПОКАЗЫВАЕМ СТРИМ СОБЕСЕДНИКА
-      const remoteVideoElement = self.element.querySelector('#remoteVideo') as HTMLVideoElement;
+      const remoteVideoElement = self.element.querySelector('#remote-video') as HTMLVideoElement;
       remoteVideoElement.srcObject = remoteStream;
       remoteVideoElement.classList.remove('d-none');
       remoteVideoElement.onloadedmetadata = () => {
@@ -139,7 +139,7 @@ export default class VideoCall extends Block {
     let self = this;
     return navigator.mediaDevices.getUserMedia({ audio: true, video: true }).then((mediaStream) => {
 
-      let myVideo = self.element.querySelector('#myVideo') as HTMLVideoElement;
+      let myVideo = self.element.querySelector('#my-video') as HTMLVideoElement;
 
       if (myVideo) {
         myVideo.srcObject = mediaStream;
@@ -174,9 +174,9 @@ export default class VideoCall extends Block {
     const temp = `<div class="video-call-wrapper ${isOpenedClass} video-call-incoming">
                        
                        <div class="video-call <% if (this.peerId !== 'outgoing') { %>video-call-waiting<% } %>">
-                           <video id="myVideo" muted="muted" playsInline></video>
-                           <video id="remoteVideo"  playsInline class="d-none"></video>
-                           <a class="btn btn-extra-lg btn-danger btn-end-call" id="btnEndCall">
+                           <video id="my-video" muted="muted" playsInline></video>
+                           <video id="remote-video"  playsInline class="d-none"></video>
+                           <a class="btn btn-extra-lg btn-danger btn-end-call" id="btn-end-call">
                                 <img src="${EndCallIcon}" />
                            </a>
                        </div>
@@ -195,10 +195,10 @@ export default class VideoCall extends Block {
                                 <% } %>
                                 
                                 <div class="call-actions">
-                                    <a class="btn btn-extra-lg btn-danger" id="btnDecline">
+                                    <a class="btn btn-extra-lg btn-danger" id="btn-decline">
                                         <img src="${EndCallIcon}" />
                                     </a>
-                                    <a class="btn btn-extra-lg btn-success" id="btnAnswer">
+                                    <a class="btn btn-extra-lg btn-success" id="btn-answer">
                                         <img src="${AnswerCallIcon}" class="shaked-icon" />
                                     </a>
                                 </div>

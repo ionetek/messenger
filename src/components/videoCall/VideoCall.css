@@ -1,102 +1,114 @@
 .video-call-wrapper {
-    position: fixed;
-    z-index: 999;
-    background: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    visibility: hidden;
-    opacity: 0;
-    -webkit-backdrop-filter: blur(2px);
-    backdrop-filter: blur(2px);
-    transition: opacity 0.5s linear;
+  position: fixed;
+  z-index: 999;
+  background: rgb(0 0 0 / 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  backdrop-filter: blur(2px);
+  transition: opacity 0.5s linear;
 }
+
 .btn-end-call {
-    position: fixed;
-    bottom: 100px;
-    left: 50%;
-    margin-left: -42px;
-    z-index: 30;
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  margin-left: -42px;
+  z-index: 30;
 }
-#myVideo {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: 20;
-    top: 0;
-    right: 0;
-    object-fit: cover;
+
+#my-video {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  right: 0;
+  object-fit: cover;
 }
-#remoteVideo {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    right: 0;
-    object-fit: cover;
+
+#remote-video {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  object-fit: cover;
 }
-.video-call-active #myVideo {
-   width: 300px;
-   height: 200px;
-   top: 30px;
-   right: 30px;
-   border-radius: 16px;
+
+.video-call-active #my-video {
+  width: 300px;
+  height: 200px;
+  top: 30px;
+  right: 30px;
+  border-radius: 16px;
 }
+
 .video-call-incoming .modal {
-    z-index: 1000;
-    max-width: 300px!important;
+  z-index: 1000;
+  max-width: 300px !important;
 }
+
 .video-call-waiting {
-    display: none;
+  display: none;
 }
+
 .video-call-incoming .call-actions {
-    flex-direction: row;
-    gap: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  flex-direction: row;
+  gap: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
 .caller-photo {
-    width: 240px;
-    height: 240px;
-    border-radius: 16px;
-    object-fit: cover;
+  width: 240px;
+  height: 240px;
+  border-radius: 16px;
+  object-fit: cover;
 }
+
 .bg-transparent {
-    background: none!important;
+  background: none !important;
 }
-.inccoming-call-text:after {
+
+.inccoming-call-text::after {
   overflow: hidden;
   display: inline-block;
   vertical-align: bottom;
-  -webkit-animation: ellipsis steps(4,end) 900ms infinite;
-  animation: ellipsis steps(4,end) 900ms infinite;
+  animation: ellipsis steps(4, end) 900ms infinite;
   content: "\2026"; /* ascii code for the ellipsis character */
-  width: 0px;
+  width: 0;
 }
+
 .shaked-icon {
   animation: shake 0.5s;
+
   /* Когда анимация будет закончена, начните снова */
   animation-iteration-count: infinite;
 }
+
 @keyframes ellipsis {
   to {
     width: 20px;
   }
 }
 
-@-webkit-keyframes ellipsis {
+@keyframes ellipsis {
   to {
     width: 20px;
   }
 }
+
 @keyframes shake {
-  0% { transform:   rotate(-5deg); }
-  50% { transform:   rotate(5deg); }
+  0% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
   100% { transform: rotate(-5deg); }
 }

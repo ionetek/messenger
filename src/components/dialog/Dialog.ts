@@ -154,7 +154,7 @@ export default class Dialog extends Block {
             if (videoCallModal.melody) {
               videoCallModal.melody.pause();
             }
-            const streams = videoCallModal.element.querySelector('#myVideo') as HTMLVideoElement;
+            const streams = videoCallModal.element.querySelector('#my-video') as HTMLVideoElement;
             const streamsSrc = (<MediaStream>streams.srcObject);
 
 

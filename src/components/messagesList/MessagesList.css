@@ -1,7 +1,7 @@
 .message-file {
-    width: 180px;
-    height: 180px;
-    border-radius: 16px;
-    object-fit: cover;
-    cursor: pointer;
+  width: 180px;
+  height: 180px;
+  border-radius: 16px;
+  object-fit: cover;
+  cursor: pointer;
 }
