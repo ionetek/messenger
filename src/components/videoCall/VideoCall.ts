@@ -3,9 +3,6 @@ import Block from '../../core/block/Block';
 import './VideoCall.css';
 import EndCallIcon from './endCallIcon.svg';
 import AnswerCallIcon from './answerCallIcon.svg';
-
-//ДОПОЛНИТЕЛЬНАЯ БИБЛИОТЕКА, ДЛЯ ДОБАВЛЕНИЯ ВОЗМОЖНОСТИ ВИДЕО ЗВОНКОВ
-//НАСТАВНИКИ РАЗРЕШИЛИ ИСПОЛЬЗОВАТЬ
 import Peer, { MediaConnection } from 'peerjs';
 import { store } from '../../store';
 
@@ -177,7 +174,7 @@ export default class VideoCall extends Block {
                            <video id="my-video" muted="muted" playsInline></video>
                            <video id="remote-video"  playsInline class="d-none"></video>
                            <a class="btn btn-extra-lg btn-danger btn-end-call" id="btn-end-call">
-                                <img src="${EndCallIcon}" />
+                                <img src="${EndCallIcon}" alt="End call" />
                            </a>
                        </div>
                        <% if (this.peerId !== 'outgoing') { %>
@@ -189,17 +186,17 @@ export default class VideoCall extends Block {
                             <div class="modal__body">
                                 
                                 <% if (this.user.avatar !== null) { %>
-                                    <img src="${config.RESOURCES_URL}<% this.user.avatar %>" class="caller-photo mb-4" />
+                                    <img src="${config.RESOURCES_URL}<% this.user.avatar %>" alt="<% this.user.first_name %>&nbsp;<% this.user.second_name %>" class="caller-photo mb-4" />
                                 <% } else { %>
-                                    <img src="/images/avatar.svg" class="caller-photo mb-4" />
+                                    <img src="/images/avatar.svg" class="caller-photo mb-4" alt="<% this.user.first_name %>&nbsp;<% this.user.second_name %>" />
                                 <% } %>
                                 
                                 <div class="call-actions">
                                     <a class="btn btn-extra-lg btn-danger" id="btn-decline">
-                                        <img src="${EndCallIcon}" />
+                                        <img src="${EndCallIcon}" alt="End call" />
                                     </a>
                                     <a class="btn btn-extra-lg btn-success" id="btn-answer">
-                                        <img src="${AnswerCallIcon}" class="shaked-icon" />
+                                        <img src="${AnswerCallIcon}" alt="Answer call" class="shaked-icon" />
                                     </a>
                                 </div>
                                 

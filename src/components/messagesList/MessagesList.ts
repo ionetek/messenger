@@ -51,7 +51,7 @@ export default class MessagesList extends Block {
                                     <div class="dialog__body-message <% if (this.messages[key].file) { %>dialog__body-message-file<% } %>">
                                         <% if (this.messages[key].file) { %>
                                             <a class="image-popup" data-image="${config.RESOURCES_URL}<% this.messages[key].file.path %>">
-                                                <img src="${config.RESOURCES_URL}<% this.messages[key].file.path %>" class="message-file" />
+                                                <img src="${config.RESOURCES_URL}<% this.messages[key].file.path %>" alt="<% this.messages[key].file.filename %>" class="message-file" />
                                             </a>
                                         <% } else { %>
                                         <% this.messages[key].content %>

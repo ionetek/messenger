@@ -47,7 +47,9 @@ h4,
 .h4 {
   font-family: Gilroy, sans-serif;
 }
-
+.h4 {
+    display: block;
+}
 .text-white {
   color: #fff;
 }

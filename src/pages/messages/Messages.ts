@@ -69,13 +69,5 @@ export default class Messages extends Block {
     if (store.getState().chatList.length) {
       messageController.closeConnection();
     }
-
-    /*store.setState({
-          messages: [],
-          currentChat: {
-            id: null,
-            users: [],
-          },
-        });*/
   }
 }

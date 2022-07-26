@@ -77,12 +77,12 @@ export default class Account extends Block {
                     <div class="nav-header">
                         <div class="nav-header__item">
                              <a class="btn btn-nav" id="back">
-                                <img src="${BackIcon}" />
+                                <img src="${BackIcon}" alt="Back" />
                              </a>
                         </div>
                         <div class="nav-header__item">
                              <a class="btn btn-nav router-link" href="/account-edit">
-                                <img src="${EditIcon}" />
+                                <img src="${EditIcon}" alt="Back" />
                              </a>
                         </div>
                     </div>

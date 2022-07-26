@@ -33,7 +33,6 @@ export default class SearchedMembers extends Block {
       },
     ];
     super(propsAndChildren, customEvents);
-
   }
 
   componentDidMount() {
@@ -51,9 +50,9 @@ export default class SearchedMembers extends Block {
                                 <li class="members-list__item">
                                          <div class="member-photo">
                                             <% if (this.users[key].avatar !== null) {  %>
-                                                <img src="${config.RESOURCES_URL}<% this.users[key].avatar %>" />
+                                                <img src="${config.RESOURCES_URL}<% this.users[key].avatar %>" alt="<% this.users[key].first_name %>&nbsp;<% this.users[key].second_name %>" />
                                             <% } else { %>
-                                                <img src="/images/avatar.svg" />
+                                                <img src="/images/avatar.svg" alt="<% this.users[key].first_name %>&nbsp;<% this.users[key].second_name %>" />
                                             <% } %>
                                          </div>
                                          <div class="member-info">
