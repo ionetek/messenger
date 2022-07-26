@@ -44,7 +44,7 @@ export default class Login extends Block {
       this.setProps({
         isLoading: state.loginPage.isLoading,
       });
-    });
+    }, 'login');
   }
 
   handleSubmit(formData: ILoginData) {

@@ -4,12 +4,13 @@
     "es2021": true
   },
   "extends": [
-    "airbnb-base"
+    "airbnb-typescript"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "tsconfig.json"
   },
   "plugins": [
     "import",
@@ -31,10 +32,7 @@
     "import/resolver": {
       "node": {
         "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
+          ".ts"
         ]
       }
     }
@@ -42,8 +40,15 @@
   "rules": {
     "no-undef": "off",
     "class-methods-use-this": "off",
+    "@typescript-eslint/indent": [
+      "error",
+      2
+    ],
+    "space-before-blocks": "off",
+    "@typescript-eslint/space-before-blocks": "off",
     "max-len": "off",
     "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "off",
     "import/prefer-default-export": "off",
     "no-cond-assign": "off",
     "no-new-func": "off",
@@ -59,13 +64,18 @@
     "no-param-reassign": "off",
     "no-return-assign": "off",
     "no-plusplus": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    "@typescript-eslint/no-implied-eval": "off",
+    "react/jsx-filename-extension": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
       {
         "js": "never",
         "mjs": "never",
-        "jsx": "never",
         "ts": "never",
         "tsx": "never"
       }

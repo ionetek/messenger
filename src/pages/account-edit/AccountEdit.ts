@@ -77,7 +77,7 @@ export default class AccountEdit extends Block {
         isLoading: state.currentUser.isLoading,
         isLoadingForm: state.accountEditPage.isLoading,
       });
-    });
+    }, 'accountEdit');
   }
 
   handleSubmit(formData: IUserInfoData) {

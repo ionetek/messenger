@@ -13,9 +13,13 @@ export const store = new Store({
   dialogId: null,
   token: null,
   chatList: [],
-  currentChat: {},
+  currentChat: {
+    id: null,
+    users: [],
+  },
   currentChatId: null,
   messages: [],
+  searchedMembers: [],
   loginPage: {
     isLoading: false,
   },
@@ -32,5 +36,9 @@ export const store = new Store({
     title: '',
     isOpened: false,
     isLoading: false,
+  },
+  videoCall: {
+    peerId: null,
+    user: {},
   },
 });

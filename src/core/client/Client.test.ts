@@ -6,7 +6,7 @@ describe('HTTP CLIENT', () => {
     Client
       .post(`${config.API_URL}/auth/signin`, {
         withCredentials: true,
-        data: JSON.stringify({ login: 'Test-user', password: 'Qwerty123' }),
+        data: JSON.stringify({ login: 'ionetek', password: 'Kukis783060' }),
 
       })
       .then(() => {

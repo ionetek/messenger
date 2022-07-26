@@ -6,11 +6,11 @@ export const showToast = (text: string, type: string = 'success') => {
   toast.setProps({ text, type });
   document.body.append(toast.getContent());
   setTimeout(() => {
-        toast.getContent()!.classList.add('toast-open');
+    toast.getContent()!.classList.add('toast-open');
   }, 1);
 
   setTimeout(() => {
-        toast.getContent()!.classList.remove('toast-open');
+    toast.getContent()!.classList.remove('toast-open');
   }, 5000);
 
   setTimeout(() => {
