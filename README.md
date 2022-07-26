@@ -3,9 +3,6 @@ Messenger for Yandex.Practicum
 
 A messenger for Yandex Practicum using its own template engine.
 
-Ссылка на Pull
-Request: [https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/8](https://github.com/ionetek/middle.messenger.praktikum.yandex/pull/8)
-
 ![img.png](https://oviland.ru/storage/ya-messenger.png)
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
