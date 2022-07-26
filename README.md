@@ -87,7 +87,7 @@ History
 
 ✅ Uploading an avatar for a chat
 
-✅ Live Chat search
+✅ Live chat search
 
 ✅ **P2P video calls using WebRTC**
 
