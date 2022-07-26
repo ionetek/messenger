@@ -33,9 +33,9 @@ export default class Chats extends Block {
                     <a router-force="true" class="chat-list__item router-link <% if (this.currentChatId == this.chatList[key].id) { %> chat-list__item-active<% } %>" href="/messages/<% this.chatList[key].id %>">
                         <div class="chat-list__item-photo">
                             <% if (this.chatList[key].avatar !== null && typeof this.chatList[key].avatar === 'string') { %>
-                                <img src="${config.RESOURCES_URL}<% this.chatList[key].avatar %>" />
+                                <img src="${config.RESOURCES_URL}<% this.chatList[key].avatar %>" alt="<% this.chatList[key].title %>" />
                             <% } else { %>
-                                <img src="/images/avatar.svg" />
+                                <img src="/images/avatar.svg" alt="<% this.chatList[key].title %>" />
                             <% } %>
                         </div>
                         <div class="chat-list__item-message">

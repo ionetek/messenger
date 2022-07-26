@@ -125,10 +125,14 @@ class MessageController {
   }
 
   public getMessages(options: IGetMessagesOptions) {
-    this._ws.send(JSON.stringify({
-      content: options.offset.toString(),
-      type: 'get old',
-    }));
+    try {
+      this._ws.send(JSON.stringify({
+        content: options.offset.toString(),
+        type: 'get old',
+      }));
+    } catch (e) {
+      throw new Error('JSON.stringify error');
+    }
   }
 
   public closeConnection() {

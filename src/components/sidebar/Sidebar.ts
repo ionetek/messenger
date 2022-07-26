@@ -59,13 +59,13 @@ export default class Sidebar extends Block {
   render() {
     this.children.newChatModal = new NewChatModal({});
     this.children.chats = new Chats({ title: '', currentChatId: this.props.currentChatId });
-    const temp = `<div><h1>Messages <a href="/account" class="btn router-link"><img src="${AccountIcon}" /></a></h1>
+    const temp = `<div><h1>Messages <a href="/account" class="btn router-link"><img src="${AccountIcon}" alt="Account" /></a></h1>
             <div class="chat-list__header">
                     <div class="input-wrapper">
                         
                         <input id="search" class="input-wrapper__form-control-gray" placeholder="Search by chat name" value="${this.props.filterByTitle}">
                     </div>
-                    <a class="btn" id="create-new-chat"><img src="${NewChatIcon}" title="New chat" /></a>
+                    <a class="btn" id="create-new-chat"><img src="${NewChatIcon}" alt="New chat" title="New chat" /></a>
                 </div>
             <div class="chat-list">
                 

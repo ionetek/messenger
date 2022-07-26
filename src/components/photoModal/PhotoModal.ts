@@ -33,9 +33,9 @@ export default class PhotoModal extends Block {
     const temp = `<div class="modal-wrapper ${isOpenedClass}">
                        <div class="modal">
                             <a class="btn btn-nav btn-close">
-                                    <img src="${CloseIcon}" />
+                                    <img src="${CloseIcon}" alt="Close" />
                             </a>
-                            <img src="<% this.image %>" class="modal-image" />
+                            <img src="<% this.image %>" class="modal-image" alt="Photo" />
                        </div>
                   </div>`;
     return this.compile(temp, this.props);

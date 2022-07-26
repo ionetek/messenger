@@ -1,8 +1,8 @@
-enum METHODS {
-  GET = 'GET',
-  POST = 'POST',
-  PUT = 'PUT',
-  DELETE = 'DELETE',
+enum Methods {
+  Get = 'GET',
+  Post = 'POST',
+  Put = 'PUT',
+  Delete = 'DELETE',
 }
 
 const defaultHeaders = {
@@ -21,15 +21,20 @@ function queryStringify(data = {} as TQueryData) {
 }
 
 class Client {
-  get = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.GET }, options!.timeout);
+  get = (url: string, options: TObj = {}) => {
+    if (!!options.data) {
+      url = `${url}${queryStringify(options.data)}`;
+    }
+    return this.request(url, { ...options, method: Methods.Get }, options!.timeout);
+  };
 
-  post = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.POST }, options!.timeout);
+  post = (url: string, options: TObj = {}) => this.request(url, { ...options, method: Methods.Post }, options!.timeout);
 
-  put = (url: string, options: TObj = {}) => this.request(url, { ...options, method: METHODS.PUT }, options!.timeout);
+  put = (url: string, options: TObj = {}) => this.request(url, { ...options, method: Methods.Put }, options!.timeout);
 
   delete = (url: string, options: TObj = {}) => this.request(url, {
     ...options,
-    method: METHODS.DELETE,
+    method: Methods.Delete,
   }, options!.timeout);
 
   request = (url: string, options: IQueryOptions, timeout = 10000) => {
@@ -53,15 +58,13 @@ class Client {
       }
 
       const xhr = new window.XMLHttpRequest();
-      const isGet = method === METHODS.GET;
+      const isGet = method === Methods.Get;
 
       xhr.withCredentials = true;
 
       xhr.open(
         method,
-        isGet && !!data
-          ? `${url}${queryStringify(data)}`
-          : url,
+        url,
       );
 
       Object.keys(headers).forEach((key) => {

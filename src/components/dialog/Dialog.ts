@@ -219,8 +219,7 @@ export default class Dialog extends Block {
   }
 
   sendVideoCallRequest(peerId: string) {
-    let message = `{"type" : "videoCall", "peerId" : "${peerId}"}`;
-    messageController.sendMessage({ message });
+    messageController.sendMessage({ message: `{"type" : "videoCall", "peerId" : "${peerId}"}` });
   }
 
   endVideoCall() {
@@ -287,9 +286,9 @@ export default class Dialog extends Block {
             <div class="dialog__header">
                 <div class="dialog__header-photo">
                             <% if (this.currentChat.avatar !== null) { %>
-                                <img src="${config.RESOURCES_URL}<% this.currentChat.avatar %>" />
+                                <img src="${config.RESOURCES_URL}<% this.currentChat.avatar %>" alt=<% this.currentChat.title %>" />
                             <% } else { %>
-                                <img src="/images/avatar.svg" />
+                                <img src="/images/avatar.svg" alt=<% this.currentChat.title %>" />
                             <% } %>
                 </div>
                 <div class="dialog__header-title">
@@ -300,19 +299,19 @@ export default class Dialog extends Block {
                 </div>
                 <div>
                     <a class="btn" id="videoCall">
-                        <img src="${VideoCallIcon}" class="cursor-pointer" />
+                        <img src="${VideoCallIcon}" class="cursor-pointer" alt="Video call" />
                     </a>
                     <div class="dialog__header-menu">
-                      <div class="btn dropdown cursor-auto"><img src="${DialogMenuIcon}" class="cursor-pointer" />
+                      <div class="btn dropdown cursor-auto"><img src="${DialogMenuIcon}" class="cursor-pointer" alt="Dialog menu" />
                           <div class="dropdown-content dropdown-content-top-right" id="dialogDropdown">
                               <ul>
                                   <li>
                                       <label class="cursor-pointer">
-                                            <img src="${UpdateChatAvatarIcon}" /> Update avatar
+                                            <img src="${UpdateChatAvatarIcon}" alt="Update avatar" /> Update avatar
                                             <input id="updateAvatar" type="file" class="d-none"  />
                                       </label>
                                   </li>
-                                  <li><a id="removeChat" class="cursor-pointer"><img src="${RemoveIcon}" /> Remove chat</a></li>
+                                  <li><a id="removeChat" class="cursor-pointer"><img src="${RemoveIcon}" alt="Remove chat" /> Remove chat</a></li>
                               </ul>
                           </div>
                         </div>
@@ -327,12 +326,12 @@ export default class Dialog extends Block {
             <div class="dialog__footer">
                 
                   <div class="dialog__footer-attachment">
-                      <div class="btn dropdown cursor-auto"><img src="${AttachmentIcon}" class="cursor-pointer" />
+                      <div class="btn dropdown cursor-auto"><img src="${AttachmentIcon}" class="cursor-pointer" alt="Attachment" />
                       <div class="dropdown-content dropdown-content-bottom-left" id="uploadDropdown">
                           <ul>
                               <li>
                                   <label class="cursor-pointer">
-                                        <img src="${UpdateChatAvatarIcon}" /> Upload photo
+                                        <img src="${UpdateChatAvatarIcon}" alt="Update chat avatar" /> Upload photo
                                         <input id="uploadPhoto" type="file" class="d-none"  />
                                   </label>
                               </li>
@@ -347,8 +346,8 @@ export default class Dialog extends Block {
                           <% this.messageInput %>
                           <% if (this.messageFilePath) { %>
                                 <div class="attachment-photo">
-                                    <img src="${config.RESOURCES_URL}<% this.messageFilePath %>" class="attachment-photo__file" />
-                                    <img src="${RemovePhotoIcon}" class="attachment-photo__btn-remove" id="removeFile"/>
+                                    <img src="${config.RESOURCES_URL}<% this.messageFilePath %>" alt="Attach photo" class="attachment-photo__file" />
+                                    <img src="${RemovePhotoIcon}" class="attachment-photo__btn-remove" alt="Remove file" id="removeFile"/>
                                 </div>
                           <% }  %>  
                           <% this.messageFile %>
@@ -357,7 +356,7 @@ export default class Dialog extends Block {
                       
                   </div>
                   <div class="dialog__footer-submit">
-                          <button type="submit" class="btn btn-success p-0"><img src="${SubmitIcon}" /></button>
+                          <button type="submit" class="btn btn-success p-0"><img src="${SubmitIcon}" alt="Send message" /></button>
                   </div>
                 
             </div>
@@ -365,7 +364,7 @@ export default class Dialog extends Block {
             <% } else { %>
             <div class="dialog__body dialog__body_empty">
                 <div>
-                    <img src="${EmptyDialog}" />
+                    <img src="${EmptyDialog}" alt="Dialog is empty" />
                 </div>
                 <div>
                     <p class="text-gray">Select a chat or create new to send a message</p>

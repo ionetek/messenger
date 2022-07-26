@@ -10,9 +10,9 @@ export const getPeerData = (message: string): boolean | TObj => {
 
   if (content && content.type === 'videoCall') {
     return { type: 'videoCall', id: content.peerId };
-  } else {
-    return false;
   }
+  return false;
+  
 };
 
  
