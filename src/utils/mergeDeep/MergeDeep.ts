@@ -1,4 +1,4 @@
-function merge(lhs: TObj, rhs: TObj): TObj {
+function merge(lhs: TObjNullable, rhs: TObjNullable): TObjNullable {
   for (const p in rhs) {
     if (!rhs.hasOwnProperty(p)) {
       continue;

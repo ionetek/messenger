@@ -5,6 +5,7 @@ import authController from '../../controllers/auth/AuthController';
 import Loader from '../../components/loader/Loader';
 import { store } from '../../store';
 import avatar from '../../utils/avatar/Avatar';
+import router from '../../router';
 
 export default class Account extends Block {
   constructor(props: TProps) {
@@ -30,6 +31,20 @@ export default class Account extends Block {
           },
         },
       },
+      {
+        selector: '#back',
+        events: {
+          click: () => {
+            store.setState({
+              currentChat: {
+                id: null,
+                users: [],
+              },
+            });
+            router.go('/messages');
+          },
+        },
+      },
 
     ];
 
@@ -47,7 +62,7 @@ export default class Account extends Block {
         phone: state.currentUser.phone,
         isLoading: state.currentUser.isLoading,
       });
-    });
+    }, 'account');
   }
 
   render() {
@@ -61,13 +76,13 @@ export default class Account extends Block {
                 <div class="container container-xs">
                     <div class="nav-header">
                         <div class="nav-header__item">
-                             <a class="btn btn-nav router-link" href="/messages">
-                                <img src="${BackIcon}" />
+                             <a class="btn btn-nav" id="back">
+                                <img src="${BackIcon}" alt="Back" />
                              </a>
                         </div>
                         <div class="nav-header__item">
                              <a class="btn btn-nav router-link" href="/account-edit">
-                                <img src="${EditIcon}" />
+                                <img src="${EditIcon}" alt="Back" />
                              </a>
                         </div>
                     </div>

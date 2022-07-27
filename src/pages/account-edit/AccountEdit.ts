@@ -77,7 +77,7 @@ export default class AccountEdit extends Block {
         isLoading: state.currentUser.isLoading,
         isLoadingForm: state.accountEditPage.isLoading,
       });
-    });
+    }, 'accountEdit');
   }
 
   handleSubmit(formData: IUserInfoData) {
@@ -250,7 +250,7 @@ export default class AccountEdit extends Block {
                     <div class="nav-header">
                         <div class="nav-header__item">
                              <a class="btn btn-nav router-link" href="/account">
-                                <img src="${BackIcon}" />
+                                <img src="${BackIcon}" alt="Back" />
                              </a>
                         </div>
                        

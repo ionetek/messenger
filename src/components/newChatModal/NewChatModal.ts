@@ -1,6 +1,5 @@
 import Block from '../../core/block/Block';
 import Input from '../input/Input';
-import './NewChatModal.css';
 import validate from '../../utils/validate/Validate';
 import CloseIcon from './closeIcon.svg';
 import Button from '../button/Button';
@@ -98,7 +97,7 @@ export default class NewChatModal extends Block {
                             <div class="modal__header">
                                 <h2 class="m-0">Create new chat</h2>
                                 <a class="btn btn-nav btn-close">
-                                    <img src="${CloseIcon}" />
+                                    <img src="${CloseIcon}" alt="Close" />
                                 </a>
                             </div>
                             <div class="modal__body">

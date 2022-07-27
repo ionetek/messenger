@@ -45,7 +45,7 @@ export default class PasswordEdit extends Block {
       this.setProps({
         isLoading: state.passwordEditPage.isLoading,
       });
-    });
+    }, 'passwordEdit');
   }
 
   handleSubmit(formData: IPasswordUpdateData) {
@@ -127,7 +127,7 @@ export default class PasswordEdit extends Block {
                     <div class="nav-header">
                         <div class="nav-header__item">
                              <a class="btn btn-nav router-link" href="/account">
-                                <img src="${BackIcon}" />
+                                <img src="${BackIcon}" alt="Back" />
                              </a>
                         </div>
                     </div>

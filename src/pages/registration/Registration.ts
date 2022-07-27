@@ -52,7 +52,7 @@ export default class Registration extends Block {
       this.setProps({
         isLoading: state.registrationPage.isLoading,
       });
-    });
+    }, 'registration');
   }
 
   handleSubmit(formData: IRegistrationData) {

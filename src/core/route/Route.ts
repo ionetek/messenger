@@ -14,47 +14,47 @@ function render(query: string, block: Block) {
 }
 
 class Route {
-    public pathname: string;
+  public pathname: string;
 
-    private _blockClass: typeof Block;
+  private _blockClass: typeof Block;
 
-    private _block: Block | null;
+  private _block: Block | null;
 
-    private _props: TProps;
+  private _props: TProps;
 
-    constructor(pathname: string, view: typeof Block, props: TProps) {
+  constructor(pathname: string, view: typeof Block, props: TProps) {
+    this.pathname = pathname;
+    this._blockClass = view;
+    this._block = null;
+    this._props = props;
+  }
+
+  navigate(pathname: string) {
+    if (this.match(pathname)) {
       this.pathname = pathname;
-      this._blockClass = view;
-      this._block = null;
-      this._props = props;
+      this.render();
     }
+  }
 
-    navigate(pathname: string) {
-      if (this.match(pathname)) {
-        this.pathname = pathname;
-        this.render();
-      }
+  leave() {
+    if (this._block) {
+      this._block.destroy();
     }
+  }
 
-    leave() {
-      if (this._block) {
-        this._block.destroy();
-      }
-    }
+  match(pathname: string) {
+    return isEqual(pathname, this.pathname);
+  }
 
-    match(pathname: string) {
-      return isEqual(pathname, this.pathname);
-    }
+  render(force: boolean = false) {
+    this._block = new this._blockClass();
+    render(this._props.rootQuery, this._block);
+    this._block.show(force);
+  }
 
-    render(force: boolean = false) {
-      this._block = new this._blockClass();
-      render(this._props.rootQuery, this._block);
-      this._block.show(force);
-    }
-
-    getPathname() {
-      return this.pathname;
-    }
+  getPathname() {
+    return this.pathname;
+  }
 }
 
 export default Route;
