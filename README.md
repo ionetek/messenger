@@ -1,7 +1,7 @@
 Messenger for Yandex.Practicum
 ==============================
 
-A messenger for Yandex Practicum using its own template engine. The possibility of video calls between users is implemented. The project is written without using third-party libraries.
+The messenger for Yandex Practicum using its own template engine. The possibility of video calls between users is implemented. The project is written without using third-party libraries.
 
 ![img.png](https://oviland.ru/storage/ya-messenger.png)
 
