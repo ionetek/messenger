@@ -13,7 +13,7 @@ Setup
 -----
 Clone the repo:
 
-    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git -b sprint_4
+    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git
 
 Move to the project path:
 
