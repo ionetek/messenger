@@ -7,7 +7,7 @@ The messenger using its own template engine. The possibility of video calls betw
 
 Figma - https://www.figma.com/file/zlrZR8phtJLrhB6rBMRtDY/MESSENGER
 
-👉 [Demo on Heroku](https://yandex-msngr.herokuapp.com/)
+👉 [Demo](https://ionetek-msgr.vercel.app/)
 ---
 Setup
 -----
