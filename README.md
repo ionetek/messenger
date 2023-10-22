@@ -1,7 +1,7 @@
-Messenger for Yandex.Practicum
+JS Messenger without using third-party libraries
 ==============================
 
-The messenger for Yandex Practicum using its own template engine. The possibility of video calls between users is implemented. The project is written without using third-party libraries.
+The messenger using its own template engine. The possibility of video calls between users is implemented. The project is written without using third-party libraries.
 
 ![img.png](https://oviland.ru/storage/ya-messenger.png)
 
@@ -13,11 +13,7 @@ Setup
 -----
 Clone the repo:
 
-    git clone https://github.com/ionetek/middle.messenger.praktikum.yandex.git
-
-Move to the project path:
-
-    cd middle.messenger.praktikum.yandex
+    git clone https://github.com/ionetek/messenger.git .
 
 Install dependencies:
 
@@ -33,12 +29,6 @@ Test:
 
     npm run test
 
-Demo:
------
-
-* [Login](https://yandex-msngr.herokuapp.com/)
-* [404 Error](https://yandex-msngr.herokuapp.com/404)
-* [500 Error](https://yandex-msngr.herokuapp.com/500)
 
 History
 -----
